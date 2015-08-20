@@ -2,3 +2,17 @@
 #
 # {{ ansible_managed }}
 
+subnet {{ dhcp_subnet }} netmask {{ dhcp_netmask }} {
+  option routers {{ dhcp_option_routers }};
+  option subnet-mask {{ dhcp_netmask }};
+{% if ansible_domain != 'localdomain' %}
+  option domain-search {{ ansible_domain }};
+{% endif %}
+{% if dhcp_domain_name_servers is defined %}
+  option domain-name-servers {{ dhcp_domain_name_servers|join(', ') }};
+{% endif %}
+{% if dhcp_range is defined %}
+  range {{ dhcp_range.begin }} {{ dhcp_range.end }};
+{% endif %}
+}
+

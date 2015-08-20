@@ -1,5 +1,14 @@
 ---
 - hosts: all
   sudo: true
+  vars:
+    dhcp_subnet: 192.168.222.0
+    dhcp_option_routers: 10.0.2.2
+    dhcp_domain_name_servers:
+      - 8.8.8.8
+      - 8.8.4.4
+    dhcp_range:
+      begin: 192.168.222.100
+      end:   192.168.222.254
   roles:
     - dhcp
