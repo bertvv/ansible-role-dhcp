@@ -1,0 +1,7 @@
+# roles/dhcp/handlers/main.yml
+---
+
+- name: restart dhcp
+  service:
+    name: dhcpd
+    state: restarted

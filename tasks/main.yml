@@ -1,0 +1,16 @@
+# roles/dhcp/tasks/main.yml
+---
+
+- name: Install packages
+  yum:
+    pkg: "{{ item }}"
+    state: installed
+  with_items: dhcp_packages
+  tags: dhcp
+
+- name: Ensure service is started
+  service:
+    name: "{{ dhcp_service }}"
+    state: started
+    enabled: true
+  tags: dhcp

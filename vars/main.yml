@@ -1,0 +1,7 @@
+# roles/dhcp/vars/main.yml
+---
+
+dhcp_packages:
+  - dhcp
+
+dhcp_service: dhcpd
