@@ -1,8 +1,14 @@
 # Ansible role `dhcp`
 
-An Ansible role for PURPOSE. Specifically, the responsibilities of this role are to:
+Ansible role for setting up ISC DHCPD on RHEL/CentOS 7. Specifically, the responsibilities of this role are to:
 
--
+- Install packages
+- Manage configuration
+
+The following are NOT concerns of this role:
+
+- Managing firewall configuration: Use e.g. [bertvv.el7](https://galaxy.ansible.com/list#/roles/2305) for this.
+
 
 ## Requirements
 

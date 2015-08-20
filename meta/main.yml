@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Bert Van Vreckem
-  description: PURPOSE
+  description: Ansible role for setting up ISC DHCPD on RHEL/CentOS 7
   company:
   license: BSD
   min_ansible_version: 1.7
