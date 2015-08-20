@@ -8,6 +8,13 @@
   with_items: dhcp_packages
   tags: dhcp
 
+- name: Install config file
+  template:
+    src: etc_dhcp_dhcpd.conf.j2
+    dest: /etc/dhcp/dhcpd.conf
+  notify: restart dhcp
+  tags: dhcpd
+
 - name: Ensure service is started
   service:
     name: "{{ dhcp_service }}"
