@@ -15,7 +15,7 @@ No specific requirements
 
 ## Role Variables
 
-This role is able to set (some) global options, and to declare subnets.
+This role is able to set (some) global options, and to specify subnet declarations.
 
 ### Global options
 
@@ -45,6 +45,58 @@ dhcp_global_domain_name_servers:
   - 8.8.8.8
   - 8.8.4.4
 ```
+
+### Subnet declarations
+
+The role variable `dhcp_subnets` contains a list of dicts, specifying the subnet declarations to be added to the DHCP configuration file. Every subnet declaration should have an `ip` and `netmask`, other options are not mandatory. We start this section with an example, a compelete overview of supported options follows.
+
+```Yaml
+dhcp_subnets:
+  - ip: 192.168.222.0
+    netmask: 255.255.255.128
+    domain_name_servers:
+      - 10.0.2.3
+      - 10.0.2.4
+    range_begin: 192.168.222.50
+    range_end: 192.168.222.127
+  - ip: 192.168.222.128
+    default_lease_time: 3600
+    max_lease_time: 7200
+    netmask: 255.255.255.128
+    domain_name_servers: 10.0.2.3
+    routers: 192.168.222.129
+    hosts:
+      - name: cl1
+        mac: '00:11:22:33:44:55'
+        ip: 192.168.222.150
+      - name: cl2
+        mac: '00:de:ad:be:ef:00'
+        ip: 192.168.222.151
+```
+
+An alphabetical list of supported options in a subnet declaration:
+
+| Option                | Required | Comment                                                               |
+| :---                  | :---:    | :--                                                                   |
+| `default_lease_time`  | no       | Default lease time for this subnet (in seconds)                       |
+| `domain_name_servers` | no       | List of domain name servers for this subnet(1)                        |
+| `domain_search`       | no       | List of domain names for resolution of non-FQDNs(1)                   |
+| `hosts`               | no       | A list of dicts specifying host declarations. See below.              |
+| `ip`                  | yes      | **Required.** IP address of the subnet                                |
+| `max_lease_time`      | no       | Maximum lease time for this subnet (in seconds)                       |
+| `netmask`             | yes      | **Required.** Network mask of the subnet (in dotted decimal notation) |
+| `range_begin`         | no       | Lowest address in the range of dynamic IP addresses to be assigned    |
+| `range_end`           | no       | Highest address in the range of dynamic IP addresses to be assigned   |
+| `routers`             | no       | IP address of the gateway for this subnet                             |
+| `subnet_mask`         | no       | Overrides the `netmask` of the subnet declaration                     |
+
+You can specify hosts that should get a fixed IP address based on their MAC by setting the `hosts` option. This is a list of dicts with the following three keys, all of which are mandatory:
+
+| Option | Comment                                   |
+| :---   | :---                                      |
+| `name` | The name of the host                      |
+| `mac`  | The MAC address of the host               |
+| `ip`   | The IP address to be assigned to the host |
 
 ## Dependencies
 
