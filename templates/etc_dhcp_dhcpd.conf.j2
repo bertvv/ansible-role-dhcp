@@ -30,7 +30,11 @@ option domain-name-servers {{ dhcp_global_domain_name_servers|join(', ') }};
 {% endif %}
 {% endif %}
 {% if dhcp_global_domain_search is defined %}
+{% if dhcp_global_domain_search is string %}
 option domain-search {{ dhcp_global_domain_search }};
+{% else %}
+option domain-search {{ dhcp_global_domain_search|join(', ') }};
+{% endif %}
 {% endif %}
 
 {# Template for global option
