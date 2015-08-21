@@ -17,6 +17,8 @@ No specific requirements
 
 This role is able to set (some) global options, and to specify subnet declarations.
 
+See the [test playbook](tests/test.yml) for a working example of a DHCP server with two subnets. This section is mainly a reference of all supported options.
+
 ### Global options
 
 The following variables, when set, will be added to the global section of the DHCP configuration file. There is no default value, so when they are not set, they will be left out.
@@ -108,7 +110,9 @@ See the [test playbook](tests/test.yml)
 
 ## Testing
 
-The `tests` directory contains tests for this role in the form of a Vagrant environment. The directory `tests/roles/dhcp` is a symbolic link that should point to the root of this project in order to work. To create it, do
+The `tests` directory contains tests for this role in the form of a Vagrant environment.  The playbook [`test.yml`](tests/test.yml) sets up a DHCP server with some global options set and two subnet declarations.
+
+The directory `tests/roles/dhcp` is a symbolic link that should point to the root of this project in order to work. If you need to (re)create it, do
 
 ```ShellSession
 $ cd tests/
@@ -118,7 +122,6 @@ $ ln -frs ../../PROJECT_DIR roles/dhcp
 
 You may want to change the base box into one that you like. The current one is based on Box-Cutter's [CentOS Packer template](https://github.com/boxcutter/centos).
 
-The playbook [`test.yml`](tests/test.yml) applies the role to a VM, setting role variables.
 
 ## Contributing
 
