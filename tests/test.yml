@@ -7,6 +7,7 @@
     dhcp_global_subnet_mask: 255.255.255.0
     dhcp_global_broadcast_address: 192.168.222.255
     dhcp_global_routers: 10.0.2.2
+    dhcp_global_domain_name: '"example.com"'
     dhcp_global_domain_name_servers:
       - 8.8.8.8
       - 8.8.4.4
@@ -25,6 +26,13 @@
         netmask: 255.255.255.128
         domain_name_servers: 10.0.2.3
         routers: 192.168.222.129
+        hosts:
+          - name: cl1
+            mac: '00:11:22:33:44:55'
+            ip: 192.168.222.150
+          - name: cl2
+            mac: '00:de:ad:be:ef:00'
+            ip: 192.168.222.151
 
   roles:
     - dhcp
