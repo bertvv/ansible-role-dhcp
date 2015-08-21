@@ -5,40 +5,46 @@
 # Global options
 
 {% if dhcp_global_default_lease_time is defined %}
-default-lease-time: {{ dhcp_global_default_lease_time }};
+default-lease-time {{ dhcp_global_default_lease_time }};
 {% endif %}
 {% if dhcp_global_max_lease_time is defined %}
-max-lease-time: {{ dhcp_global_max_lease_time }};
+max-lease-time {{ dhcp_global_max_lease_time }};
 {% endif %}
 {% if dhcp_global_subnet_mask is defined %}
-subnet-mask {{ dhcp_global_subnet_mask }};
+option subnet-mask {{ dhcp_global_subnet_mask }};
 {% endif %}
 {% if dhcp_global_broadcast_address is defined %}
-global-broadcast-address {{ dhcp_global_broadcast_address }};
+option broadcast-address {{ dhcp_global_broadcast_address }};
 {% endif %}
 {% if dhcp_global_routers is defined %}
-global-routers {{ dhcp_global_routers }};
+option routers {{ dhcp_global_routers }};
 {% endif %}
 {% if dhcp_global_domain_name_servers is defined %}
 {% if dhcp_global_domain_name_servers is string %}
-global-domain-name-servers {{ dhcp_global_domain_name_servers }};
+option domain-name-servers {{ dhcp_global_domain_name_servers }};
 {% else %}
-global-domain-name-servers {{ dhcp_global_domain_name_servers|join(', ') }};
+option domain-name-servers {{ dhcp_global_domain_name_servers|join(', ') }};
 {% endif %}
 {% endif %}
 {% if dhcp_global_domain_search is defined %}
-global-domain-search {{ dhcp_global_domain_search }};
+option domain-search {{ dhcp_global_domain_search }};
 {% endif %}
 
 {# Template for global option
 {% if dhcp_global_OPT is defined %}
-global-OPT {{ dhcp_global_OPT }};
+option OPT {{ dhcp_global_OPT }};
 {% endif %}
 #}
 # Subnet declarations
 
 {% for subnet in dhcp_subnets %}
 subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
+{% if subnet.default_lease_time is defined %}
+  default-lease-time {{ subnet.default_lease_time }};
+{% endif %}
+{% if subnet.max_lease_time is defined %}
+  max-lease-time {{ subnet.max_lease_time }};
+{% endif %}
 {% if subnet.routers is defined %}
   option routers {{ subnet.routers }};
 {% endif %}
