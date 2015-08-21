@@ -1,6 +1,4 @@
 # roles/dhcp/defaults/main.yml
 ---
 
-dhcp_subnet: "{{ ansible_default_ipv4.network }}"
-dhcp_netmask: "{{ ansible_default_ipv4.netmask }}"
-dhcp_option_routers: "{{ ansible_default_ipv4.gateway }}"
+dhcp_subnets: []
