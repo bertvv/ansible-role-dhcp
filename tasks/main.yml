@@ -12,6 +12,7 @@
   template:
     src: etc_dhcp_dhcpd.conf.j2
     dest: /etc/dhcp/dhcpd.conf
+    validate: 'dhcpd -t -cf %s'
   notify: restart dhcp
   tags: dhcpd
 
