@@ -11,5 +11,6 @@ galaxy_info:
       - 7
   categories:
     - system
+    - networking
 dependencies: []
 version: 1.0.0
