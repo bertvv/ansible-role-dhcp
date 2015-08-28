@@ -14,7 +14,7 @@
     dest: /etc/dhcp/dhcpd.conf
     validate: 'dhcpd -t -cf %s'
   notify: restart dhcp
-  tags: dhcpd
+  tags: dhcp
 
 - name: Ensure service is started
   service:
