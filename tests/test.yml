@@ -7,7 +7,7 @@
     dhcp_global_subnet_mask: 255.255.255.0
     dhcp_global_broadcast_address: 192.168.222.255
     dhcp_global_routers: 10.0.2.2
-    dhcp_global_domain_name: '"example.com"'
+    dhcp_global_domain_name: example.com
     dhcp_global_domain_name_servers:
       - 8.8.8.8
       - 8.8.4.4

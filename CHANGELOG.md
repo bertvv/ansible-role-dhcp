@@ -9,6 +9,7 @@ This file adheres to the guidelines of [http://keepachangelog.com/](http://keepa
 ### Changed
 
 - Fixed a tag name
+- Fixed GH-1: domain name no longer needs to be "double quoted"
 
 ## 1.0.0 - 2015-08-24
 

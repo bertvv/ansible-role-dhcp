@@ -20,7 +20,7 @@ option broadcast-address {{ dhcp_global_broadcast_address }};
 option routers {{ dhcp_global_routers }};
 {% endif %}
 {% if dhcp_global_domain_name is defined %}
-option domain-name {{ dhcp_global_domain_name }};
+option domain-name "{{ dhcp_global_domain_name }}";
 {% endif %}
 {% if dhcp_global_domain_name_servers is defined %}
 {% if dhcp_global_domain_name_servers is string %}
