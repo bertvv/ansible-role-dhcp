@@ -80,7 +80,34 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
   }
 {% endfor %}
 {% endif %}
+
+{% if subnet.pools is defined %}
+{% for pool in subnet.pools %}
+  pool {
+  {% if pool.domain_name_servers is defined %}
+  {% if pool.domain_name_servers is string %}
+    option domain-name-servers {{ pool.domain_name_servers }};
+  {% else %}
+    option domain-name-servers {{ pool.domain_name_servers|join(', ') }};
+  {% endif %}
+  {% endif %}
+  {% if pool.default_lease_time is defined %}
+    default-lease-time {{ pool.default_lease_time }};
+  {% endif %}
+  {% if pool.min_lease_time is defined %}
+    min-lease-time {{ pool.min_lease_time }};
+  {% endif %}
+  {% if pool.max_lease_time is defined %}
+    max-lease-time {{ pool.max_lease_time }};
+  {% endif %}
+  {% if pool.range_begin is defined and pool.range_end is defined %}
+  range {{ pool.range_begin }} {{ pool.range_end }};
+  {% endif %}
+
+  }
+
+{% endfor %}
+{% endif %}
 }
 
 {% endfor %}
-
