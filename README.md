@@ -35,6 +35,10 @@ See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for 
 | `dhcp_global_max_lease_time`      | Maximum lease time in seconds                                           |
 | `dhcp_global_routers`             | IP address of the router                                                |
 | `dhcp_global_subnet_mask`         | Global subnet mask                                                      |
+| `dhcp_global_bootp` 		    | Global bootp (allow,deny,ignore)                                        |
+| `dhcp_global_booting` 	    | Global booting (allow,deny,ignore)                                      |
+| `dhcp_global_next_server` 	    | IP for boot server       			                              |
+| `dhcp_global_filename` 	    | Filename to request for boot	                                      |
 
 (1) This option may be written either as a list (when you have more than one item), or as a string (when you have only one). The following snippet shows an example of both:
 
@@ -91,6 +95,10 @@ An alphabetical list of supported options in a subnet declaration:
 | `range_end`           | no       | Highest address in the range of dynamic IP addresses to be assigned   |
 | `routers`             | no       | IP address of the gateway for this subnet                             |
 | `subnet_mask`         | no       | Overrides the `netmask` of the subnet declaration                     |
+| `bootp`               | no       | allow,deny,ignore                                                     |
+| `booting`             | no       | allow,deny,ignore	                                                   |
+| `next_server`         | no       | IP address of the boot server		                           |
+| `filename`            | no       | filename to retrieve from boot server                                 |
 
 You can specify hosts that should get a fixed IP address based on their MAC by setting the `hosts` option. This is a list of dicts with the following three keys, all of which are mandatory:
 
