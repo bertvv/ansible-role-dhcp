@@ -10,10 +10,10 @@
 {{ dhcp_global_booting }} booting;
 {% endif %}
 {% if dhcp_global_next_server is defined %}
-  next-server {{ dhcp_global_next_server}};
+next-server {{ dhcp_global_next_server}};
 {% endif %}
 {% if dhcp_global_filename is defined %}
-  filename {{ dhcp_global_filename }};
+filename "{{ dhcp_global_filename }}";
 {% endif %}
 {% if dhcp_global_default_lease_time is defined %}
 default-lease-time {{ dhcp_global_default_lease_time }};
@@ -86,7 +86,7 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
   next-server {{ subnet.next_server }};
 {% endif %}
 {% if subnet.filename is defined %}
-  filename {{ subnet.filename }};
+  filename "{{ subnet.filename }}";
 {% endif %}
 {% if subnet.bootp is defined %}
 {{ subnet.bootp }} bootp;
