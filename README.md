@@ -1,5 +1,9 @@
 # Ansible role `dhcp`
 
+This is a fork of [bertvv/ansible-role-dhcp](https://github.com/bertvv/ansible-role-dhcp). It was created with the sole purpose of adding the ability to create address pools within a subnet.
+
+This role has the same role variables as the original role. The only addition is the option to specify a list of dicts specifying address pools within a subnet. See below.
+
 Ansible role for setting up ISC DHCPD on RHEL/CentOS 7. Specifically, the responsibilities of this role are to:
 
 - Install packages
@@ -108,6 +112,17 @@ You can specify hosts that should get a fixed IP address based on their MAC by s
 | `mac`  | The MAC address of the host               |
 | `ip`   | The IP address to be assigned to the host |
 
+You can specify address pools within a subnet by setting the `pools` options. This allows you to specify a pool of addresses that will be treated differently than another pool of addresses, even on the same network segment or subnet. It is a list of dicts with the following keys, all of which are optional:
+
+| Option | Comment                                                         |
+| :---   | :---                                                            |
+| `domain_name_servers` | The domain name servers to be used for this pool |
+| `default_lease_time`  | The default lease time for this pool             |
+| `min_lease_time`      | The minimum lease time for this pool             |
+| `max_lease_time`      | The maximum lease time for this pool             |
+| `range_begin`         | The lowest address in this pool                  |
+| `range_end`           | The highest address in this pool                 |
+
 ## Dependencies
 
 No dependencies.
@@ -142,4 +157,3 @@ BSD
 ## Author Information
 
 Bert Van Vreckem (bert.vanvreckem@gmail.com)
-
