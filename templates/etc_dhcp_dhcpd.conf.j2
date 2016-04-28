@@ -2,7 +2,9 @@
 #
 # {{ ansible_managed }}
 
+#
 # Global options
+#
 {% if dhcp_global_bootp is defined %}
 {{ dhcp_global_bootp }} bootp;
 {% endif %}
@@ -54,7 +56,7 @@ option OPT {{ dhcp_global_OPT }};
 {% endif %}
 #}
 # Subnet declarations
-
+#
 {% for subnet in dhcp_subnets %}
 subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
 {% if subnet.default_lease_time is defined %}
@@ -105,6 +107,9 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
 {% endif %}
 
 {% if subnet.pools is defined %}
+#
+# Address pools
+#
 {% for pool in subnet.pools %}
   pool {
   {% if pool.domain_name_servers is defined %}
