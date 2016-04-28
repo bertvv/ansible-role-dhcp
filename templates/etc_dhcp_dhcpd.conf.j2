@@ -55,6 +55,21 @@ option domain-search {{ dhcp_global_domain_search|join(', ') }};
 option OPT {{ dhcp_global_OPT }};
 {% endif %}
 #}
+{% if dhcp_classes is defined %}
+
+#
+# Classes
+#
+{% for class in dhcp_classes %}
+class "{{ class.name }}" {
+{% if class.rule is defined %}
+  {{ class.rule }};
+{% endif %}
+}
+
+{% endfor %}
+{% endif %}
+#
 # Subnet declarations
 #
 {% for subnet in dhcp_subnets %}
@@ -107,31 +122,34 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
 {% endif %}
 
 {% if subnet.pools is defined %}
-#
-# Address pools
-#
+  # Address pool(s)
 {% for pool in subnet.pools %}
   pool {
-  {% if pool.domain_name_servers is defined %}
-  {% if pool.domain_name_servers is string %}
+{% if pool.domain_name_servers is defined %}
+{% if pool.domain_name_servers is string %}
     option domain-name-servers {{ pool.domain_name_servers }};
-  {% else %}
+{% else %}
     option domain-name-servers {{ pool.domain_name_servers|join(', ') }};
-  {% endif %}
-  {% endif %}
-  {% if pool.default_lease_time is defined %}
+{% endif %}
+{% endif %}
+{% if pool.default_lease_time is defined %}
     default-lease-time {{ pool.default_lease_time }};
-  {% endif %}
-  {% if pool.min_lease_time is defined %}
+{% endif %}
+{% if pool.min_lease_time is defined %}
     min-lease-time {{ pool.min_lease_time }};
-  {% endif %}
-  {% if pool.max_lease_time is defined %}
+{% endif %}
+{% if pool.max_lease_time is defined %}
     max-lease-time {{ pool.max_lease_time }};
-  {% endif %}
-  {% if pool.range_begin is defined and pool.range_end is defined %}
-  range {{ pool.range_begin }} {{ pool.range_end }};
-  {% endif %}
-
+{% endif %}
+{% if pool.range_begin is defined and pool.range_end is defined %}
+    range {{ pool.range_begin }} {{ pool.range_end }};
+{% endif %}
+{% if pool.allow is defined %}
+    allow {{ pool.allow }};
+{% endif %}
+{% if pool.deny is defined %}
+    deny {{ pool.deny }};
+{% endif %}
   }
 
 {% endfor %}
