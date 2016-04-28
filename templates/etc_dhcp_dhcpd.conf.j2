@@ -60,10 +60,10 @@ option OPT {{ dhcp_global_OPT }};
 #
 # Classes
 #
-{% for class in dhcp_classes %}
+{% for class in dhcp_global_classes %}
 class "{{ class.name }}" {
-{% if class.rule is defined %}
-  {{ class.rule }};
+{% if class.match is defined %}
+  {{ class.match }};
 {% endif %}
 }
 
