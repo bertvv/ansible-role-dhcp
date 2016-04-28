@@ -27,18 +27,19 @@ See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for 
 
 | Variable                          | Comments                                                                |
 | :---                              | :---                                                                    |
+| `dhcp_global_booting`             | Global booting (allow, deny, ignore)                                    |
+| `dhcp_global_bootp`               | Global bootp (allow, deny, ignore)                                      |
 | `dhcp_global_broadcast_address`   | Global broadcast address                                                |
+| `dhcp_global_classes`             | Class definitions with a match statement(2)                             |
 | `dhcp_global_default_lease_time`  | Default lease time in seconds                                           |
-| `dhcp_global_domain_name`         | The domain name the client should use when resolving host names         |
 | `dhcp_global_domain_name_servers` | A list of IP addresses of DNS servers(1)                                |
+| `dhcp_global_domain_name`         | The domain name the client should use when resolving host names         |
 | `dhcp_global_domain_search`       | A list of domain names too be used by the client to locate non-FQDNs(1) |
+| `dhcp_global_filename`            | Filename to request for boot                                            |
 | `dhcp_global_max_lease_time`      | Maximum lease time in seconds                                           |
+| `dhcp_global_next_server`         | IP for boot server                                                      |
 | `dhcp_global_routers`             | IP address of the router                                                |
 | `dhcp_global_subnet_mask`         | Global subnet mask                                                      |
-| `dhcp_global_bootp`               | Global bootp (allow,deny,ignore)                                        |
-| `dhcp_global_booting`             | Global booting (allow,deny,ignore)                                      |
-| `dhcp_global_next_server`         | IP for boot server                                                      |
-| `dhcp_global_filename`            | Filename to request for boot                                            |
 
 (1) This option may be written either as a list (when you have more than one item), or as a string (when you have only one). The following snippet shows an example of both:
 
@@ -51,6 +52,17 @@ dhcp_global_domain_name_servers:
   - 8.8.8.8
   - 8.8.4.4
 ```
+
+(2) This role supports the definition of classes with a match statement, e.g.:
+
+```Yaml
+# Class for VirtualBox VMs
+dhcp_global_classes:
+  - name: vbox
+    match: 'match if binary-to-ascii(16,8,":",substring(hardware, 1, 3)) = "8:0:27"'
+```
+
+Class names can be used in the definition of address pools (see below).
 
 ### Subnet declarations
 
@@ -84,21 +96,21 @@ An alphabetical list of supported options in a subnet declaration:
 
 | Option                | Required | Comment                                                               |
 | :---                  | :---:    | :--                                                                   |
+| `booting`             | no       | allow,deny,ignore                                                     |
+| `bootp`               | no       | allow,deny,ignore                                                     |
 | `default_lease_time`  | no       | Default lease time for this subnet (in seconds)                       |
 | `domain_name_servers` | no       | List of domain name servers for this subnet(1)                        |
 | `domain_search`       | no       | List of domain names for resolution of non-FQDNs(1)                   |
+| `filename`            | no       | filename to retrieve from boot server                                 |
 | `hosts`               | no       | A list of dicts specifying host declarations. See below.              |
 | `ip`                  | yes      | **Required.** IP address of the subnet                                |
 | `max_lease_time`      | no       | Maximum lease time for this subnet (in seconds)                       |
 | `netmask`             | yes      | **Required.** Network mask of the subnet (in dotted decimal notation) |
+| `next_server`         | no       | IP address of the boot server                                         |
 | `range_begin`         | no       | Lowest address in the range of dynamic IP addresses to be assigned    |
 | `range_end`           | no       | Highest address in the range of dynamic IP addresses to be assigned   |
 | `routers`             | no       | IP address of the gateway for this subnet                             |
 | `subnet_mask`         | no       | Overrides the `netmask` of the subnet declaration                     |
-| `bootp`               | no       | allow,deny,ignore                                                     |
-| `booting`             | no       | allow,deny,ignore                                                     |
-| `next_server`         | no       | IP address of the boot server                                         |
-| `filename`            | no       | filename to retrieve from boot server                                 |
 
 You can specify hosts that should get a fixed IP address based on their MAC by setting the `hosts` option. This is a list of dicts with the following three keys, all of which are mandatory:
 
@@ -110,14 +122,25 @@ You can specify hosts that should get a fixed IP address based on their MAC by s
 
 You can specify address pools within a subnet by setting the `pools` options. This allows you to specify a pool of addresses that will be treated differently than another pool of addresses, even on the same network segment or subnet. It is a list of dicts with the following keys, all of which are optional:
 
-| Option                | Comment                                          |
-| :---                  | :---                                             |
-| `domain_name_servers` | The domain name servers to be used for this pool |
-| `default_lease_time`  | The default lease time for this pool             |
-| `min_lease_time`      | The minimum lease time for this pool             |
-| `max_lease_time`      | The maximum lease time for this pool             |
-| `range_begin`         | The lowest address in this pool                  |
-| `range_end`           | The highest address in this pool                 |
+| Option                | Comment                                             |
+| :---                  | :---                                                |
+| `allow`               | Specifies which hosts are allowed in this pool(1)   |
+| `default_lease_time`  | The default lease time for this pool                |
+| `deny`                | Specifies which hosts are not allowed in this pool  |
+| `domain_name_servers` | The domain name servers to be used for this pool(1) |
+| `max_lease_time`      | The maximum lease time for this pool                |
+| `min_lease_time`      | The minimum lease time for this pool                |
+| `range_begin`         | The lowest address in this pool                     |
+| `range_end`           | The highest address in this pool                    |
+
+(1) For the `allow` and `deny` fields, the options are enumerated in [dhcpd.conf(5)](http://linux.die.net/man/5/dhcpd.conf), but include:
+
+- `booting`
+- `bootp`
+- `client-updates`
+- `known-clients`
+- `members of "CLASS"`
+- `unknown-clients`
 
 ## Dependencies
 
