@@ -1,9 +1,5 @@
 # Ansible role `dhcp`
 
-This is a fork of [bertvv/ansible-role-dhcp](https://github.com/bertvv/ansible-role-dhcp). It was created with the sole purpose of adding the ability to create address pools within a subnet.
-
-This role has the same role variables as the original role. The only addition is the option to specify a list of dicts specifying address pools within a subnet. See below.
-
 Ansible role for setting up ISC DHCPD on RHEL/CentOS 7. Specifically, the responsibilities of this role are to:
 
 - Install packages
@@ -39,10 +35,10 @@ See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for 
 | `dhcp_global_max_lease_time`      | Maximum lease time in seconds                                           |
 | `dhcp_global_routers`             | IP address of the router                                                |
 | `dhcp_global_subnet_mask`         | Global subnet mask                                                      |
-| `dhcp_global_bootp` 		    | Global bootp (allow,deny,ignore)                                        |
-| `dhcp_global_booting` 	    | Global booting (allow,deny,ignore)                                      |
-| `dhcp_global_next_server` 	    | IP for boot server       			                              |
-| `dhcp_global_filename` 	    | Filename to request for boot	                                      |
+| `dhcp_global_bootp`               | Global bootp (allow,deny,ignore)                                        |
+| `dhcp_global_booting`             | Global booting (allow,deny,ignore)                                      |
+| `dhcp_global_next_server`         | IP for boot server                                                      |
+| `dhcp_global_filename`            | Filename to request for boot                                            |
 
 (1) This option may be written either as a list (when you have more than one item), or as a string (when you have only one). The following snippet shows an example of both:
 
@@ -100,8 +96,8 @@ An alphabetical list of supported options in a subnet declaration:
 | `routers`             | no       | IP address of the gateway for this subnet                             |
 | `subnet_mask`         | no       | Overrides the `netmask` of the subnet declaration                     |
 | `bootp`               | no       | allow,deny,ignore                                                     |
-| `booting`             | no       | allow,deny,ignore	                                                   |
-| `next_server`         | no       | IP address of the boot server		                           |
+| `booting`             | no       | allow,deny,ignore                                                     |
+| `next_server`         | no       | IP address of the boot server                                         |
 | `filename`            | no       | filename to retrieve from boot server                                 |
 
 You can specify hosts that should get a fixed IP address based on their MAC by setting the `hosts` option. This is a list of dicts with the following three keys, all of which are mandatory:
@@ -114,8 +110,8 @@ You can specify hosts that should get a fixed IP address based on their MAC by s
 
 You can specify address pools within a subnet by setting the `pools` options. This allows you to specify a pool of addresses that will be treated differently than another pool of addresses, even on the same network segment or subnet. It is a list of dicts with the following keys, all of which are optional:
 
-| Option | Comment                                                         |
-| :---   | :---                                                            |
+| Option                | Comment                                          |
+| :---                  | :---                                             |
 | `domain_name_servers` | The domain name servers to be used for this pool |
 | `default_lease_time`  | The default lease time for this pool             |
 | `min_lease_time`      | The minimum lease time for this pool             |
@@ -157,3 +153,8 @@ BSD
 ## Author Information
 
 Bert Van Vreckem (bert.vanvreckem@gmail.com)
+
+Contributions by:
+
+- [Rian Bogle](https://github.com/rbogle/)
+- [Birgit Croux](https://github.com/birgitcroux/)
