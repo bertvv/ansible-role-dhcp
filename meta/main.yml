@@ -2,14 +2,13 @@
 galaxy_info:
   author: Bert Van Vreckem
   description: Ansible role for setting up ISC DHCPD on RHEL/CentOS 7
-  company:
   license: BSD
   min_ansible_version: 1.7
   platforms:
-  - name: EL
-    versions:
-      - 7
-  categories:
+    - name: EL
+      versions:
+        - 7
+  galaxy_tags:
     - system
     - networking
 dependencies: []
