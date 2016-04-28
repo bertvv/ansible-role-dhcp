@@ -1,0 +1,38 @@
+---
+- hosts: all
+  become: true
+  vars:
+    dhcp_global_default_lease_time: 28800 # 8hrs
+    dhcp_global_max_lease_time: 43200 # 12 hrs
+    dhcp_global_subnet_mask: 255.255.255.0
+    dhcp_global_broadcast_address: 192.168.222.255
+    dhcp_global_routers: 10.0.2.2
+    dhcp_global_domain_name: example.com
+    dhcp_global_domain_name_servers:
+      - 8.8.8.8
+      - 8.8.4.4
+
+    dhcp_subnets:
+      - ip: 192.168.222.0
+        netmask: 255.255.255.128
+        domain_name_servers:
+          - 10.0.2.3
+          - 10.0.2.4
+        range_begin: 192.168.222.50
+        range_end: 192.168.222.127
+      - ip: 192.168.222.128
+        default_lease_time: 3600
+        max_lease_time: 7200
+        netmask: 255.255.255.128
+        domain_name_servers: 10.0.2.3
+        routers: 192.168.222.129
+        hosts:
+          - name: cl1
+            mac: '00:11:22:33:44:55'
+            ip: 192.168.222.150
+          - name: cl2
+            mac: '00:de:ad:be:ef:00'
+            ip: 192.168.222.151
+
+  roles:
+    - dhcp
