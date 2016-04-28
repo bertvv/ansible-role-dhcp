@@ -3,7 +3,18 @@
 # {{ ansible_managed }}
 
 # Global options
-
+{% if dhcp_global_bootp is defined %}
+{{ dhcp_global_bootp }} bootp;
+{% endif %}
+{% if dhcp_global_booting is defined %}
+{{ dhcp_global_booting }} booting;
+{% endif %}
+{% if dhcp_global_next_server is defined %}
+next-server {{ dhcp_global_next_server}};
+{% endif %}
+{% if dhcp_global_filename is defined %}
+filename "{{ dhcp_global_filename }}";
+{% endif %}
 {% if dhcp_global_default_lease_time is defined %}
 default-lease-time {{ dhcp_global_default_lease_time }};
 {% endif %}
@@ -70,6 +81,18 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
 {% endif %}
 {% if subnet.range_begin is defined and subnet.range_end is defined %}
   range {{ subnet.range_begin }} {{ subnet.range_end }};
+{% endif %}
+{% if subnet.next_server is defined %}
+  next-server {{ subnet.next_server }};
+{% endif %}
+{% if subnet.filename is defined %}
+  filename "{{ subnet.filename }}";
+{% endif %}
+{% if subnet.bootp is defined %}
+{{ subnet.bootp }} bootp;
+{% endif %}
+{% if subnet.booting is defined %}
+{{ subnet.booting }} booting;
 {% endif %}
 {% if subnet.hosts is defined %}
 
