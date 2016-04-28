@@ -55,7 +55,7 @@ option domain-search {{ dhcp_global_domain_search|join(', ') }};
 option OPT {{ dhcp_global_OPT }};
 {% endif %}
 #}
-{% if dhcp_classes is defined %}
+{% if dhcp_global_classes is defined %}
 
 #
 # Classes
