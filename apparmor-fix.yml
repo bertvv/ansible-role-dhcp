@@ -1,0 +1,41 @@
+# roles/dhcp/tasks/apparmor-fix.yml
+# This playbook adds an AppArmor policy rule that allows the dhcpd process to
+# acces temporary config files copied to the server by Ansible.
+---
+
+- name: AppArmor fix | Check if policy file exists
+  stat:
+    path: "{{ dhcp_apparmor_policy }}"
+  register: apparmor_policyfile
+  tags: dhcp
+
+- name: AppArmor fix | Ensure dhcpd can acces temp config file for validation (1/2)
+  lineinfile:
+    dest: "{{ dhcp_apparmor_policy }}"
+    line: '  capability dac_override,'
+    insertafter: '  capability setuid,'
+    state: present
+    create: no
+  when: apparmor_policyfile.stat.exists
+  failed_when: false
+  register: apparmor_fix_1
+  tags: dhcp
+
+- name: AppArmor fix | Ensure dhcpd can acces temp config file for validation (2/2)
+  lineinfile:
+    dest: "{{ dhcp_apparmor_policy }}"
+    line: '  /home/*/.ansible/** r,'
+    insertbefore: '.*/etc/dhcp/ r,'
+    state: present
+    create: no
+  when: apparmor_policyfile.stat.exists
+  failed_when: false
+  register: apparmor_fix_2
+  tags: dhcp
+
+- name: AppArmor fix | Restart AppArmor
+  service:
+    name: apparmor
+    state: restarted
+  when: apparmor_fix_1.changed or apparmor_fix_2.changed
+  tags: dhcp

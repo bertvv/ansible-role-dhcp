@@ -1,6 +1,10 @@
 # Ansible role `dhcp`
 
-Ansible role for setting up ISC DHCPD on RHEL/CentOS 7. Specifically, the responsibilities of this role are to:
+Ansible role for setting up ISC DHCPD. The role metadata only mentions the platforms on which it was successfully tested (CentOS 7, Fedora 23, and Ubuntu 14.04 LTS and 16.04 LTS), but should also work on other versions of these distributions.
+
+Version 2.0.0 of this role uses features that are introduced in Ansible 2.0. If you run Ansible 1.7-1.9, use version 1.1.0 of this role. Both versions have identical functionality.
+
+The responsibilities of this role are to:
 
 - Install packages
 - Manage configuration ([dhcpd.conf(5)](http://linux.die.net/man/5/dhcpd.conf))

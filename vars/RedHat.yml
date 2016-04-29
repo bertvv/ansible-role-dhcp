@@ -1,0 +1,9 @@
+# roles/dhcp/vars/RedHat.yml
+---
+
+dhcp_packages:
+  - dhcp
+
+dhcp_config: /etc/dhcp/dhcpd.conf
+
+dhcp_service: dhcpd

@@ -3,5 +3,10 @@
 
 - name: restart dhcp
   service:
-    name: dhcpd
+    name: "{{ dhcp_service }}"
+    state: restarted
+
+- name: restart apparmor
+  service:
+    name: apparmor
     state: restarted

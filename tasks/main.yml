@@ -1,17 +1,26 @@
 # roles/dhcp/tasks/main.yml
 ---
 
+- include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+    - "{{ default }}.yml"
+
 - name: Install packages
-  yum:
+  package:
     pkg: "{{ item }}"
     state: installed
   with_items: "{{ dhcp_packages }}"
   tags: dhcp
 
+- include: apparmor-fix.yml
+  when: ansible_os_family == 'Debian'
+
 - name: Install config file
   template:
     src: etc_dhcp_dhcpd.conf.j2
-    dest: /etc/dhcp/dhcpd.conf
+    dest: "{{ dhcp_config }}"
     validate: 'dhcpd -t -cf %s'
   notify: restart dhcp
   tags: dhcp
