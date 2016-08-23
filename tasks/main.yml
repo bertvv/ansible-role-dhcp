@@ -6,6 +6,7 @@
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
     - "{{ default }}.yml"
+  tags: dhcp
 
 - name: Install packages
   package:
