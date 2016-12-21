@@ -96,13 +96,6 @@ dhcp_subnets:
     netmask: 255.255.255.128
     domain_name_servers: 10.0.2.3
     routers: 192.168.222.129
-    hosts:
-      - name: cl1
-        mac: '00:11:22:33:44:55'
-        ip: 192.168.222.150
-      - name: cl2
-        mac: '00:de:ad:be:ef:00'
-        ip: 192.168.222.151
 ```
 
 An alphabetical list of supported options in a subnet declaration:
@@ -115,7 +108,6 @@ An alphabetical list of supported options in a subnet declaration:
 | `domain_name_servers` | no       | List of domain name servers for this subnet(1)                        |
 | `domain_search`       | no       | List of domain names for resolution of non-FQDNs(1)                   |
 | `filename`            | no       | filename to retrieve from boot server                                 |
-| `hosts`               | no       | A list of dicts specifying host declarations. See below.              |
 | `ip`                  | yes      | **Required.** IP address of the subnet                                |
 | `max_lease_time`      | no       | Maximum lease time for this subnet (in seconds)                       |
 | `netmask`             | yes      | **Required.** Network mask of the subnet (in dotted decimal notation) |
@@ -124,14 +116,6 @@ An alphabetical list of supported options in a subnet declaration:
 | `range_end`           | no       | Highest address in the range of dynamic IP addresses to be assigned   |
 | `routers`             | no       | IP address of the gateway for this subnet                             |
 | `subnet_mask`         | no       | Overrides the `netmask` of the subnet declaration                     |
-
-You can specify hosts that should get a fixed IP address based on their MAC by setting the `hosts` option. This is a list of dicts with the following three keys, all of which are mandatory:
-
-| Option | Comment                                   |
-| :---   | :---                                      |
-| `name` | The name of the host                      |
-| `mac`  | The MAC address of the host               |
-| `ip`   | The IP address to be assigned to the host |
 
 You can specify address pools within a subnet by setting the `pools` options. This allows you to specify a pool of addresses that will be treated differently than another pool of addresses, even on the same network segment or subnet. It is a list of dicts with the following keys, all of which are optional:
 
@@ -154,6 +138,26 @@ You can specify address pools within a subnet by setting the `pools` options. Th
 - `known-clients`
 - `members of "CLASS"`
 - `unknown-clients`
+
+### Host declarations
+
+You can specify hosts that should get a fixed IP address based on their MAC by setting the `dhcp_hosts` option. This is a list of dicts with the following three keys, all of which are mandatory:
+
+| Option | Comment                                   |
+| :---   | :---                                      |
+| `name` | The name of the host                      |
+| `mac`  | The MAC address of the host               |
+| `ip`   | The IP address to be assigned to the host |
+
+```Yaml
+dhcp_hosts:
+  - name: cl1
+    mac: '00:11:22:33:44:55'
+    ip: 192.168.222.150
+  - name: cl2
+    mac: '00:de:ad:be:ef:00'
+    ip: 192.168.222.151
+```
 
 ## Dependencies
 

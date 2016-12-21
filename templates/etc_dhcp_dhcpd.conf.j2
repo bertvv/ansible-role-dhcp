@@ -117,15 +117,6 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
 {% if subnet.booting is defined %}
 {{ subnet.booting }} booting;
 {% endif %}
-{% if subnet.hosts is defined %}
-
-{% for host in subnet.hosts %}
-  host {{ host.name }} {
-    hardware ethernet {{ host.mac }};
-    fixed-address {{ host.ip }};
-  }
-{% endfor %}
-{% endif %}
 
 {% if subnet.pools is defined %}
   # Address pool(s)
@@ -163,3 +154,12 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
 }
 
 {% endfor %}
+{% if dhcp_hosts is defined %}
+
+{% for host in dhcp_hosts %}
+host {{ host.name }} {
+  hardware ethernet {{ host.mac }};
+  fixed-address {{ host.ip }};
+}
+{% endfor %}
+{% endif %}
