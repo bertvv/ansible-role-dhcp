@@ -5,6 +5,9 @@
 #
 # Global options
 #
+{% if dhcp_global_authoritative is defined %}
+{{ dhcp_global_authoritative }};
+{% endif %}
 {% if dhcp_global_bootp is defined %}
 {{ dhcp_global_bootp }} bootp;
 {% endif %}
