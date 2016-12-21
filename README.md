@@ -39,6 +39,7 @@ See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for 
 | Variable                          | Comments                                                                |
 | :---                              | :---                                                                    |
 | `dhcp_global_authoritative`       | Global authoritative statement (authoritative, not authoritative)       |
+| `dhcp_global_log_facility`        | Global log facility                                                     |
 | `dhcp_global_booting`             | Global booting (allow, deny, ignore)                                    |
 | `dhcp_global_bootp`               | Global bootp (allow, deny, ignore)                                      |
 | `dhcp_global_broadcast_address`   | Global broadcast address                                                |
