@@ -52,6 +52,7 @@ See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for 
 | `dhcp_global_max_lease_time`      | Maximum lease time in seconds                                           |
 | `dhcp_global_next_server`         | IP for boot server                                                      |
 | `dhcp_global_routers`             | IP address of the router                                                |
+| `dhcp_global_server_name`         | Server name sent to the client                                          |
 | `dhcp_global_subnet_mask`         | Global subnet mask                                                      |
 
 (1) This option may be written either as a list (when you have more than one item), or as a string (when you have only one). The following snippet shows an example of both:
@@ -115,6 +116,7 @@ An alphabetical list of supported options in a subnet declaration:
 | `range_begin`         | no       | Lowest address in the range of dynamic IP addresses to be assigned    |
 | `range_end`           | no       | Highest address in the range of dynamic IP addresses to be assigned   |
 | `routers`             | no       | IP address of the gateway for this subnet                             |
+| `server_name`         | no       | Server name sent to the client                                        |
 | `subnet_mask`         | no       | Overrides the `netmask` of the subnet declaration                     |
 
 You can specify address pools within a subnet by setting the `pools` options. This allows you to specify a pool of addresses that will be treated differently than another pool of addresses, even on the same network segment or subnet. It is a list of dicts with the following keys, all of which are optional:

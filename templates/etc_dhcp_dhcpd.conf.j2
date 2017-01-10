@@ -55,6 +55,9 @@ option domain-search {{ dhcp_global_domain_search }};
 option domain-search {{ dhcp_global_domain_search|join(', ') }};
 {% endif %}
 {% endif %}
+{% if dhcp_global_server_name is defined %}
+option server-name "{{ dhcp_global_server_name }}";
+{% endif %}
 
 {# Template for global option
 {% if dhcp_global_OPT is defined %}
@@ -104,6 +107,9 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
 {% endif %}
 {% if subnet.range_begin is defined and subnet.range_end is defined %}
   range {{ subnet.range_begin }} {{ subnet.range_end }};
+{% endif %}
+{% if subnet.server_name is defined %}
+  server-name {{ subnet.server_name }};
 {% endif %}
 {% if subnet.next_server is defined %}
   next-server {{ subnet.next_server }};
