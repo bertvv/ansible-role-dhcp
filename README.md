@@ -28,7 +28,7 @@ No specific requirements
 
 This role is able to set (some) global options, and to specify subnet declarations.
 
-See the [test playbook](tests/test.yml) for a working example of a DHCP server with two subnets. This section is mainly a reference of all supported options.
+See the test playbook (see below) for a working example of a DHCP server with two subnets. This section is mainly a reference of all supported options.
 
 ### Global options
 
