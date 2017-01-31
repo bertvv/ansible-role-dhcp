@@ -11,7 +11,7 @@
 - name: Install packages
   package:
     pkg: "{{ item }}"
-    state: installed
+    state: "{{ dhcp_packages_state }}"
   with_items: "{{ dhcp_packages }}"
   tags: dhcp
 
