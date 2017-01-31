@@ -5,6 +5,12 @@
 #
 # Global options
 #
+{% if dhcp_global_authoritative is defined %}
+{{ dhcp_global_authoritative }};
+{% endif %}
+{% if dhcp_global_log_facility is defined %}
+log-facility {{ dhcp_global_log_facility }};
+{% endif %}
 {% if dhcp_global_bootp is defined %}
 {{ dhcp_global_bootp }} bootp;
 {% endif %}
@@ -48,6 +54,9 @@ option domain-search {{ dhcp_global_domain_search }};
 {% else %}
 option domain-search {{ dhcp_global_domain_search|join(', ') }};
 {% endif %}
+{% endif %}
+{% if dhcp_global_server_name is defined %}
+option server-name "{{ dhcp_global_server_name }}";
 {% endif %}
 
 {# Template for global option
@@ -99,6 +108,9 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
 {% if subnet.range_begin is defined and subnet.range_end is defined %}
   range {{ subnet.range_begin }} {{ subnet.range_end }};
 {% endif %}
+{% if subnet.server_name is defined %}
+  server-name {{ subnet.server_name }};
+{% endif %}
 {% if subnet.next_server is defined %}
   next-server {{ subnet.next_server }};
 {% endif %}
@@ -110,15 +122,6 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
 {% endif %}
 {% if subnet.booting is defined %}
 {{ subnet.booting }} booting;
-{% endif %}
-{% if subnet.hosts is defined %}
-
-{% for host in subnet.hosts %}
-  host {{ host.name }} {
-    hardware ethernet {{ host.mac }};
-    fixed-address {{ host.ip }};
-  }
-{% endfor %}
 {% endif %}
 
 {% if subnet.pools is defined %}
@@ -157,3 +160,12 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
 }
 
 {% endfor %}
+{% if dhcp_hosts is defined %}
+
+{% for host in dhcp_hosts %}
+host {{ host.name }} {
+  hardware ethernet {{ host.mac }};
+  fixed-address {{ host.ip }};
+}
+{% endfor %}
+{% endif %}

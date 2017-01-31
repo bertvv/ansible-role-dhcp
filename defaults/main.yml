@@ -1,4 +1,5 @@
 # roles/dhcp/defaults/main.yml
 ---
 
+dhcp_packages_state: "installed"
 dhcp_subnets: []
