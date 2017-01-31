@@ -55,7 +55,7 @@ See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for 
 (1) This option may be written either as a list (when you have more than one item), or as a string (when you have only one). The following snippet shows an example of both:
 
 ```Yaml
-# A single DNS servr
+# A single DNS server
 dhcp_global_domain_name_servers: 8.8.8.8
 
 # A list of DNS servers
