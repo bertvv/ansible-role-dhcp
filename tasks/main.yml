@@ -17,10 +17,19 @@
 - include: apparmor-fix.yml
   when: ansible_os_family == 'Debian'
 
+- name: Set config directory perms
+  file:
+    path: "{{ dhcp_config | dirname }}"
+    state: directory
+    mode: 0755
+
 - name: Install config file
   template:
     src: etc_dhcp_dhcpd.conf.j2
     dest: "{{ dhcp_config }}"
+    owner: root
+    group: root
+    mode: 0644
     validate: 'dhcpd -t -cf %s'
   notify: restart dhcp
   tags: dhcp

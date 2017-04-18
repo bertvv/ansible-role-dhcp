@@ -54,6 +54,9 @@ See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for 
 | `dhcp_global_routers`             | IP address of the router                                                |
 | `dhcp_global_server_name`         | Server name sent to the client                                          |
 | `dhcp_global_subnet_mask`         | Global subnet mask                                                      |
+| `dhcp_global_omapi_port`          | OMAPI port                                                              |
+| `dhcp_global_omapi_secret`        | OMAPI secret                                                            |
+| `dhcp_global_other_options`       | Array of arbitrary additional global options                            |
 
 (1) This option may be written either as a list (when you have more than one item), or as a string (when you have only one). The following snippet shows an example of both:
 
