@@ -1,0 +1,16 @@
+---
+- hosts: testws
+  become: true
+  handlers:
+    - name: restart network
+      service:
+        name: network
+        state: restarted
+  pre_tasks:
+    - name: Configure host only network interface
+      copy:
+        src: testws-ifcfg-enp0s8
+        dest: /etc/sysconfig/network-scripts/ifcfg-enp0s8
+      #notify: restart network
+  vars: []
+  roles: []
