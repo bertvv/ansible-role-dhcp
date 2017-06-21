@@ -1,10 +1,18 @@
 # ISC DHCPD configuration -- don't edit manually!
 #
 # {{ ansible_managed }}
-
 #
 # Global options
 #
+{% if dhcp_global_omapi_port is defined %}
+omapi-port {{ dhcp_global_omapi_port }};
+{% endif %}
+{% if dhcp_omapi_secret is defined %}
+key omapi_key {
+    algorithm HMAC-MD5;
+    secret "{{ dhcp_omapi_secret }}";
+};
+{% endif %}
 {% if dhcp_global_authoritative is defined %}
 {{ dhcp_global_authoritative }};
 {% endif %}
@@ -58,14 +66,15 @@ option domain-search {{ dhcp_global_domain_search|join(', ') }};
 {% if dhcp_global_server_name is defined %}
 option server-name "{{ dhcp_global_server_name }}";
 {% endif %}
-
+{% for option in dhcp_global_other_options %}
+option {{ option }};
+{% endfor %}
 {# Template for global option
 {% if dhcp_global_OPT is defined %}
 option OPT {{ dhcp_global_OPT }};
 {% endif %}
 #}
 {% if dhcp_global_classes is defined %}
-
 #
 # Classes
 #
@@ -75,7 +84,6 @@ class "{{ class.name }}" {
   {{ class.match }};
 {% endif %}
 }
-
 {% endfor %}
 {% endif %}
 #
@@ -123,7 +131,6 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
 {% if subnet.booting is defined %}
 {{ subnet.booting }} booting;
 {% endif %}
-
 {% if subnet.pools is defined %}
   # Address pool(s)
 {% for pool in subnet.pools %}
@@ -154,14 +161,11 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
     deny {{ pool.deny }};
 {% endif %}
   }
-
 {% endfor %}
 {% endif %}
 }
-
 {% endfor %}
 {% if dhcp_hosts is defined %}
-
 {% for host in dhcp_hosts %}
 host {{ host.name }} {
   hardware ethernet {{ host.mac }};
