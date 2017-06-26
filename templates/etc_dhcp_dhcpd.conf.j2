@@ -86,7 +86,6 @@ option {{ option }};
 include "{{ dhcp_config_dir }}/{{ include | basename }}";
 {% endfor %}
 {% endif %}
-{% endif %}
 
 {% if dhcp_global_classes is defined %}
 #
