@@ -17,12 +17,21 @@
 
 - include: apparmor-fix.yml
   when: ansible_os_family == 'Debian'
+  tags: dhcp
+
+- name: Install includes
+  copy:
+    src: "{{ item }}"
+    dest: "{{ dhcp_config_dir }}/{{ item | basename }}"
+  with_items: "{{ dhcp_global_includes }}"
+  tags: dhcp
 
 - name: Set config directory perms
   file:
     path: "{{ dhcp_config | dirname }}"
     state: directory
     mode: 0755
+  tags: dhcp
 
 - name: Install config file
   template:
