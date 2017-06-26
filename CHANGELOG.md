@@ -8,14 +8,18 @@ This file adheres to the guidelines of [http://keepachangelog.com/](http://keepa
 
 ### Added
 
-- (GH-7) New configuration items: `dhcp_global_log_facility`, `dhcp_global_server_name`, `dhcp_global_authoritative` (credit: [@jpiron](https://github.com/jpiron))
+- New configuration items:
+    - (GH-7) `dhcp_global_log_facility`, `dhcp_global_server_name`, `dhcp_global_authoritative` (credit: [@jpiron](https://github.com/jpiron))
+    - `dhcp_global_ntp_servers`, `dhcp_global_includes` (credit: Felix Egli)
+
 - (GH-9) Support OMAPI keys and catch-all options (credit: [@joshbenner](https://github.com/joshbenner))
 
 ### Changed
 
 - (GH-7) Several improvements: package state as variable instead of hard-coded, made host declarations global (credit: [@jpiron](https://github.com/jpiron)
 - (GH-8) Fixed typo in README (credit: [@donvipre](https://github.com/donvipre)
- 
+- Quoted values in `dhcp_global_domain_search` (credit: Felix Egli)
+
 ## 2.0.0 - 2016-04-29
 
 ### Added
