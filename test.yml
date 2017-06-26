@@ -1,19 +1,24 @@
 ---
-- hosts: all
+- hosts: testdhcp
   become: true
+  #pre_tasks:
+    #- name: set IPv6 address of host system
+      #local_action: command 'ip address add fdad:d155:f869:55b4::1/64 dev enp0s8'
+    #- name: set IPv6 address of DHCP server
+    #  command: 'ip address add fdad:d155:f869:55b4::2/64 dev enp0s8'
   vars:
     dhcp_global_default_lease_time: 28800 # 8hrs
     dhcp_global_max_lease_time: 43200 # 12 hrs
     dhcp_global_subnet_mask: 255.255.255.0
     dhcp_global_broadcast_address: 192.168.222.255
-    dhcp_global_routers: 10.0.2.2
+    #dhcp_global_routers: 10.0.2.2
     dhcp_global_domain_name: example.com
     dhcp_global_domain_name_servers:
       - 8.8.8.8
       - 8.8.4.4
     dhcp_global_bootp: allow
     dhcp_global_booting: allow
-    dhcp_global_nex_server: 192.168.222.3
+    dhcp_global_next_server: 192.168.222.3
     dhcp_global_filename: boot.img
 
     dhcp_global_classes:
@@ -47,6 +52,19 @@
           - name: cl2
             mac: '00:de:ad:be:ef:00'
             ip: 192.168.222.151
+
+    dhcp6_enable: true
+    dhcp6_subnets:
+      - ip: 'fdad:d155:f869:55b4::'
+        cidr: 64
+        range_begin: 'fdad:d155:f869:55b4::2:0000'
+        range_end: 'fdad:d155:f869:55b4::2:ffff'
+        default_lease_time: 1800
+        max_lease_time: 7200
+        hosts:
+          - name: testws
+            mac: '08:00:27:4c:e4:46'
+            ip: 'fdad:d155:f869:55b4::3:1'
 
   roles:
     - dhcp
