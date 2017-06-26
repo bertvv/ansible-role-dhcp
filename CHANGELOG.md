@@ -4,6 +4,18 @@ This file contains al notable changes to the dhcp Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/).
 
+## 2.1.0 - 2017-06-2X
+
+### Added
+
+- (GH-7) New configuration items: `dhcp_global_log_facility`, `dhcp_global_server_name`, `dhcp_global_authoritative` (credit: [@jpiron](https://github.com/jpiron))
+- (GH-9) Support OMAPI keys and catch-all options (credit: [@joshbenner](https://github.com/joshbenner))
+
+### Changed
+
+- (GH-7) Several improvements: package state as variable instead of hard-coded, made host declarations global (credit: [@jpiron](https://github.com/jpiron)
+- (GH-8) Fixed typo in README (credit: [@donvipre](https://github.com/donvipre)
+ 
 ## 2.0.0 - 2016-04-29
 
 ### Added

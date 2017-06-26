@@ -191,11 +191,11 @@ Issues, feature requests, ideas are appreciated and can be posted in the Issues 
 
 BSD
 
-## Author Information
+## Contributors
 
-Bert Van Vreckem (bert.vanvreckem@gmail.com)
-
-Contributions by:
-
-- [Rian Bogle](https://github.com/rbogle/)
+- [Bert Van Vreckem](https://github.com/bertvv) (maintainer)
 - [Birgit Croux](https://github.com/birgitcroux/)
+- [@donvipre](https://github.com/donvipre)
+- [Jonathan Piron](https://github.com/jpiron)
+- [Josh Benner](https://github.com/joshbenner)
+- [Rian Bogle](https://github.com/rbogle/)
