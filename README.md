@@ -49,8 +49,10 @@ See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for 
 | `dhcp_global_domain_name`         | The domain name the client should use when resolving host names         |
 | `dhcp_global_domain_search`       | A list of domain names too be used by the client to locate non-FQDNs(1) |
 | `dhcp_global_filename`            | Filename to request for boot                                            |
+| `dhcp_global_includes`            | List of config files to be included (from `dhcp_config_dir`)            |
 | `dhcp_global_max_lease_time`      | Maximum lease time in seconds                                           |
 | `dhcp_global_next_server`         | IP for boot server                                                      |
+| `dhcp_global_ntp_servers`         | List of IP addresses of NTP servers                                     |
 | `dhcp_global_routers`             | IP address of the router                                                |
 | `dhcp_global_server_name`         | Server name sent to the client                                          |
 | `dhcp_global_subnet_mask`         | Global subnet mask                                                      |
@@ -196,6 +198,7 @@ BSD
 - [Bert Van Vreckem](https://github.com/bertvv) (maintainer)
 - [Birgit Croux](https://github.com/birgitcroux/)
 - [@donvipre](https://github.com/donvipre)
+- Felix Egli
 - [Jonathan Piron](https://github.com/jpiron)
 - [Josh Benner](https://github.com/joshbenner)
 - [Rian Bogle](https://github.com/rbogle/)
