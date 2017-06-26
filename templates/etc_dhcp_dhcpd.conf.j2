@@ -1,6 +1,7 @@
 # ISC DHCPD configuration -- don't edit manually!
 #
 # {{ ansible_managed }}
+
 #
 # Global options
 #
@@ -49,6 +50,13 @@ option routers {{ dhcp_global_routers }};
 {% if dhcp_global_domain_name is defined %}
 option domain-name "{{ dhcp_global_domain_name }}";
 {% endif %}
+{% if dhcp_global_ntp_servers is defined %}
+{% if dhcp_global_ntp_servers is string %}
+option ntp-servers {{ dhcp_global_ntp_servers }};
+{% else %}
+option ntp-servers {{ dhcp_global_ntp_servers|join(', ') }};
+{% endif %}
+{% endif %}
 {% if dhcp_global_domain_name_servers is defined %}
 {% if dhcp_global_domain_name_servers is string %}
 option domain-name-servers {{ dhcp_global_domain_name_servers }};
@@ -58,9 +66,9 @@ option domain-name-servers {{ dhcp_global_domain_name_servers|join(', ') }};
 {% endif %}
 {% if dhcp_global_domain_search is defined %}
 {% if dhcp_global_domain_search is string %}
-option domain-search {{ dhcp_global_domain_search }};
+option domain-search "{{ dhcp_global_domain_search }}";
 {% else %}
-option domain-search {{ dhcp_global_domain_search|join(', ') }};
+option domain-search "{{ dhcp_global_domain_search|join('", "') }}";
 {% endif %}
 {% endif %}
 {% if dhcp_global_server_name is defined %}
@@ -69,11 +77,16 @@ option server-name "{{ dhcp_global_server_name }}";
 {% for option in dhcp_global_other_options %}
 option {{ option }};
 {% endfor %}
-{# Template for global option
-{% if dhcp_global_OPT is defined %}
-option OPT {{ dhcp_global_OPT }};
+
+#
+# Includes
+#
+{% for include in dhcp_global_includes %}
+include "{{ dhcp_config_dir }}/{{ include | basename }}";
+{% endfor %}
 {% endif %}
-#}
+
+
 {% if dhcp_global_classes is defined %}
 #
 # Classes
