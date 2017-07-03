@@ -4,6 +4,12 @@ This file contains al notable changes to the dhcp Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/).
 
+## 2.1.1 - 2017-07-03
+
+### Changed
+
+- (GH-10) Fixed bug where playbook run fails because `dhcp_global_includes` is undefined
+
 ## 2.1.0 - 2017-06-26
 
 ### Added
