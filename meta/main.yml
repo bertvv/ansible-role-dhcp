@@ -7,14 +7,12 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-        - 6
         - 7
     - name: Fedora
       versions:
-        - 23
+        - 25
     - name: Ubuntu
       versions:
-        - trusty
         - xenial
   galaxy_tags:
     - system
