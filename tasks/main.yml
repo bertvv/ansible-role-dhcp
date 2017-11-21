@@ -15,7 +15,7 @@
   with_items: "{{ dhcp_packages }}"
   tags: dhcp
 
-- include: apparmor-fix.yml
+- include_tasks: apparmor-fix.yml
   when: ansible_os_family == 'Debian'
   tags: dhcp
 
