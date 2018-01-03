@@ -148,6 +148,14 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
 {% if subnet.booting is defined %}
 {{ subnet.booting }} booting;
 {% endif %}
+{% if subnet.hosts is defined %}
+{% for host in subnet.hosts %}
+  host {{ host.name }} {
+    hardware ethernet {{ host.mac }};
+    fixed-address {{ host.ip }};
+  }
+{% endfor %}
+{% endif %}
 {% if subnet.pools is defined %}
   # Address pool(s)
 {% for pool in subnet.pools %}
