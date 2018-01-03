@@ -117,7 +117,11 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
   option subnet-mask {{ subnet.subnet_mask }};
 {% endif %}
 {% if subnet.domain_search is defined %}
-  option domain-search {{ subnet.domain_search }};
+{% if subnet.domain_search is string %}
+  option domain-search "{{ subnet.domain_search }}";
+{% else %}
+  option domain-search "{{ subnet.domain_search|join('", "') }}";
+{% endif %}
 {% endif %}
 {% if subnet.domain_name_servers is defined %}
 {% if subnet.domain_name_servers is string %}
