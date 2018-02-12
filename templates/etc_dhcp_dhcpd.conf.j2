@@ -182,7 +182,9 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
 {% for host in dhcp_hosts %}
 host {{ host.name }} {
   hardware ethernet {{ host.mac }};
+{% if host.ip is defined %}
   fixed-address {{ host.ip }};
+{% endif %}
 }
 {% endfor %}
 {% endif %}
