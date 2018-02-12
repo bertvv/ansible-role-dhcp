@@ -4,7 +4,7 @@
 - name: restart dhcp
   service:
     name: "{{ dhcp_service }}"
-    state: restarted
+    state: "{{ (dhcp_global_server_state | default('started') == 'started') | ternary('restarted', 'stopped') }}"
 
 - name: restart apparmor
   service:
