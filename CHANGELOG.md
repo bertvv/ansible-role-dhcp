@@ -4,6 +4,14 @@ This file contains al notable changes to the dhcp Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/).
 
+## 2.1.3 - 2018-08-01
+
+### Added
+
+- New configuration items for failover peer:
+    - `address`, `failover_peer`, `hba`, `load_balance_max_seconds`, `max-balance`, `max-lease-misbalance`, `max-lease-ownership`, `max_response_delay`, `max_unacked_updates`, `mclt`, `min-balance`, `peer_address`, `peer_port`, `port`, `role`, `split`
+
+
 ## 2.1.2 - 2017-11-21
 
 ### Changed
@@ -66,4 +74,3 @@ First release!
 
 - Allow setting some global variables
 - Subnet declarations in YAML
-

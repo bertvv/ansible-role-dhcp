@@ -80,6 +80,66 @@ option {{ option }};
 {% if dhcp_global_includes is defined %}
 
 #
+# DHCP Failover config
+#
+# Notes: In the past couple years, TCP ports 647 (primary) and 847 (peer) have
+# emerged as the standard bindings for DHCP failover. It is worth noting that as
+# recently as 2005, the dhcpd.conf(5) man page used ports 519 and 520 in its
+# failover example, but 647 and 847 look like good choices as of 2008. However,
+# the dhcpd.conf(5) man page says that the primary port and the peer port may be
+# the same number.
+
+{% if failover_peer is defined %}
+failover peer "{{ failover_peer }}" {
+{% if failover.role is defined %}
+   # [ primary | secondary ];
+   {{ failover.role }};
+{% endif %}
+{% if failover.address is defined %}
+  address {{ failover.address }};
+{% endif %}
+{% if failover.port is defined %}
+  port {{ failover.port }};
+{% endif %}
+{% if failover.peer_address is defined %}
+  peer address {{ failover.peer_address }};
+{% endif %}
+{% if failover.peer_port is defined %}
+  peer port {{ failover.peer_port }};
+{% endif %}
+{% if failover.max_response_delay is defined %}
+  max-response-delay {{ failover.max_response_delay }};
+{% endif %}
+{% if failover.max_unacked_updates is defined %}
+  max-unacked-updates {{ failover.max_unacked_updates }};
+{% endif %}
+{% if failover.split is defined %}
+  split {{ failover.split }};
+{% endif %}
+{% if failover.hba is defined %}
+  hba {{ failover.hba }};
+{% endif %}
+{% if failover.mclt is defined %}
+  mclt {{ failover.mclt }};
+{% endif %}
+{% if failover.load_balance_max_seconds is defined %}
+  load balance max seconds {{ failover.load_balance_max_seconds }};
+{% endif %}
+{% if failover.max_lease_misbalance is defined %}
+  max-lease-misbalance {{ failover.max_lease_misbalance }};
+{% endif %}
+{% if failover.max_lease_ownership is defined %}
+  max-lease-ownership {{ failover.max_lease_ownership }};
+{% endif %}
+{% if failover.min_balance is defined %}
+  min-balance {{ failover.min_balance }};
+{% endif %}
+{% if failover.max_balance is defined %}
+  max-balance {{ failover.max_balance }};
+{% endif %}
+}
+{% endif %}
+#
 # Includes
 #
 {% for include in dhcp_global_includes %}
@@ -148,6 +208,10 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
   # Address pool(s)
 {% for pool in subnet.pools %}
   pool {
+{% if pool.failover_peer is defined %}
+# This pool has failover, see above for server details
+failover peer "{{ pool.failover_peer }}";
+{% endif %}
 {% if pool.domain_name_servers is defined %}
 {% if pool.domain_name_servers is string %}
     option domain-name-servers {{ pool.domain_name_servers }};
