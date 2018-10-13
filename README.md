@@ -149,7 +149,7 @@ You can specify address pools within a subnet by setting the `pools` options. Th
 
 ### Host declarations
 
-You can specify hosts that should get a fixed IP address based on their MAC by setting the `dhcp_hosts` option. This is a list of dicts with the following three keys, all of which are mandatory:
+You can specify hosts that should get a fixed IP address based on their MAC by setting the `dhcp_hosts` option. This is a list of dicts with the following three keys, of which `name` and `mac` are mandatory:
 
 | Option | Comment                                   |
 | :---   | :---                                      |
