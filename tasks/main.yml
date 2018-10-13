@@ -44,9 +44,9 @@
   notify: restart dhcp
   tags: dhcp
 
-- name: Ensure service is started
+- name: "Ensure service is {{ dhcp_global_server_state | default('started') }}"
   service:
     name: "{{ dhcp_service }}"
-    state: started
+    state: "{{ dhcp_global_server_state | default('started') }}"
     enabled: true
   tags: dhcp
