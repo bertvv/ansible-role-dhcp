@@ -4,13 +4,18 @@ This file contains al notable changes to the dhcp Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/).
 
-## 2.1.3 - 2018-08-01
+## 2.2.0 - 2018-10-13
 
 ### Added
 
-- New configuration items for failover peer:
-    - `address`, `failover_peer`, `hba`, `load_balance_max_seconds`, `max-balance`, `max-lease-misbalance`, `max-lease-ownership`, `max_response_delay`, `max_unacked_updates`, `mclt`, `min-balance`, `peer_address`, `peer_port`, `port`, `role`, `split`
+- (GH-13,14) support fixed address hosts in subnets (credit: [Ahmed Sghaier](https://github.com/asghaier))
+- (GH-15) Add variable `dhcp_service_state`, to define the desired state of the service (default: started). (credit: [Alessandro Ogier](https://github.com/aogier))
+- (GH-17) New configuration items for failover peer: `address`, `failover_peer`, `hba`, `load_balance_max_seconds`, `max-balance`, `max-lease-misbalance`, `max-lease-ownership`, `max_response_delay`, `max_unacked_updates`, `mclt`, `min-balance`, `peer_address`, `peer_port`, `port`, `role`, `split` (credit: [cacheira](https://github.com/cacheira))
 
+### Changed
+
+- (GH-11,12) The `domain_search` key of `dhcp_subnets` can now also be a list (credit: [Ahmed Sghaier](https://github.com/asghaier))
+- (GH-16) Allow host declaration without specifying `fixed-address`. (credit: [Alessandro Ogier](https://github.com/aogier))
 
 ## 2.1.2 - 2017-11-21
 
