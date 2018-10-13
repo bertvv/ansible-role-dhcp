@@ -83,6 +83,47 @@ dhcp_global_classes:
 
 Class names can be used in the definition of address pools (see below).
 
+(3) This role also supports the definition of a failover peer, e.g.:
+
+```Yaml
+# Failover peer definition
+failover_peer: failover-group
+failover:
+  role: primary # | secondary
+  address: 192.168.56.101
+  port: 647
+  peer_address: 192.168.56.102
+  peer_port: 647
+  max_response_delay: 15
+  max_unacked_updates: 10
+  load_balance_max_seconds: 5
+  split: 255
+  mclt: 3600
+```
+
+An alphabetical list of supported options in a failover declaration:
+
+| Option                	  | Required | Comment                                                               |
+| :---                  	  | :---:    | :--                                                                   |
+| `address`             	  | no       | This server's IP address                                              |
+| `failover_peer`       	  | no       | Name of the configured peer, to be used on a per pool basis           |
+| `hba`                 	  | no       | colon-separated-hex-list                                              |
+| `load_balance_max_seconds`	  | no       | Cutoff after which load balance is disabled (3 to 5 recommended)	     |
+| `max-balance`  		  | no       | Failover pool balance statement					     |
+| `max-lease-misbalance`          | no       | Failover pool balance statement					     |
+| `max-lease-ownership`           | no       | Failover pool balance statement					     |
+| `max_response_delay`  	  | no       | Maximum seconds without contact before engaging failover              |
+| `max_unacked_updates` 	  | no       | Maximum BNDUPD it can send before receiving a BNDACK (10 recommended) |
+| `mclt`                	  | no       | Maximum Client Lead Time                                              |
+| `min-balance`  		  | no       | Failover pool balance statement					     |
+| `peer_address`        	  | no       | Failover peer's IP addres                                             |
+| `peer_port`           	  | no       | This server's port (generally 519/520 or 647/847)                     |
+| `port`                	  | no       | This server's port (generally 519/520 or 647/847)                     |
+| `role`                	  | no       | primary, secondary                                                    |
+| `split`               	  | no       | Load balance split (0-255)                                            |
+
+The failover peer directive has to be in the definition of address pools (see below).
+
 ### Subnet declarations
 
 The role variable `dhcp_subnets` contains a list of dicts, specifying the subnet declarations to be added to the DHCP configuration file. Every subnet declaration should have an `ip` and `netmask`, other options are not mandatory. We start this section with an example, a compelete overview of supported options follows.
