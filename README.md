@@ -47,7 +47,7 @@ See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for 
 | `dhcp_global_default_lease_time`  | Default lease time in seconds                                           |
 | `dhcp_global_domain_name_servers` | A list of IP addresses of DNS servers(1)                                |
 | `dhcp_global_domain_name`         | The domain name the client should use when resolving host names         |
-| `dhcp_global_domain_search`       | A list of domain names too be used by the client to locate non-FQDNs(1) |
+| `dhcp_global_domain_search`       | A list of domain names to be used by the client to locate non-FQDNs(1)  |
 | `dhcp_global_filename`            | Filename to request for boot                                            |
 | `dhcp_global_includes`            | List of config files to be included (from `dhcp_config_dir`)            |
 | `dhcp_global_max_lease_time`      | Maximum lease time in seconds                                           |
@@ -163,6 +163,7 @@ An alphabetical list of supported options in a subnet declaration:
 | `next_server`         | no       | IP address of the boot server                                         |
 | `range_begin`         | no       | Lowest address in the range of dynamic IP addresses to be assigned    |
 | `range_end`           | no       | Highest address in the range of dynamic IP addresses to be assigned   |
+| `ranges`              | no       | If multiple ranges are needed, they can be specified as a list (2)    |
 | `routers`             | no       | IP address of the gateway for this subnet                             |
 | `server_name`         | no       | Server name sent to the client                                        |
 | `subnet_mask`         | no       | Overrides the `netmask` of the subnet declaration                     |
@@ -188,6 +189,14 @@ You can specify address pools within a subnet by setting the `pools` options. Th
 - `known-clients`
 - `members of "CLASS"`
 - `unknown-clients`
+
+(2) For multiple subnet ranges, they can be specified, thus:
+
+```Yaml
+ranges:
+  - { begin: 192.168.222.50, end: 192.168.222.99 }
+  - { begin: 192.168.222.110, end: 192.168.222.127 }
+```
 
 ### Host declarations
 
@@ -245,3 +254,4 @@ BSD
 - [Jonathan Piron](https://github.com/jpiron)
 - [Josh Benner](https://github.com/joshbenner)
 - [Rian Bogle](https://github.com/rbogle/)
+- [Stuart Knight](https://github.com/blofeldthefish)
