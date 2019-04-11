@@ -50,6 +50,7 @@ See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for 
 | `dhcp_global_domain_search`       | A list of domain names too be used by the client to locate non-FQDNs(1) |
 | `dhcp_global_filename`            | Filename to request for boot                                            |
 | `dhcp_global_includes`            | List of config files to be included (from `dhcp_config_dir`)            |
+| `dhcp_global_includes_missing`    | Boolean.  Continue if `includes` file(s) missing from role's files/     |
 | `dhcp_global_max_lease_time`      | Maximum lease time in seconds                                           |
 | `dhcp_global_next_server`         | IP for boot server                                                      |
 | `dhcp_global_ntp_servers`         | List of IP addresses of NTP servers                                     |

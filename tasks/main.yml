@@ -24,6 +24,7 @@
     src: "{{ item }}"
     dest: "{{ dhcp_config_dir }}/{{ item | basename }}"
   with_items: "{{ dhcp_global_includes }}"
+  ignore_errors: "{{ dhcp_global_includes_missing }}"
   tags: dhcp
 
 - name: Set config directory perms
