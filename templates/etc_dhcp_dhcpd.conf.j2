@@ -80,6 +80,7 @@ option {{ option }};
 {% endfor %}
 {% endif %}
 {% if dhcp_global_includes is defined %}
+{% if failover_peer is defined %}
 
 #
 # DHCP Failover config
@@ -91,7 +92,6 @@ option {{ option }};
 # the dhcpd.conf(5) man page says that the primary port and the peer port may be
 # the same number.
 
-{% if failover_peer is defined %}
 failover peer "{{ failover_peer }}" {
 {% if failover.role is defined %}
    # [ primary | secondary ];
@@ -262,6 +262,10 @@ failover peer "{{ pool.failover_peer }}";
 }
 {% endfor %}
 {% if dhcp_hosts is defined %}
+
+#
+# Host declarations
+#
 {% for host in dhcp_hosts %}
 host {{ host.name | replace (" ","_") | replace ("'","_") | replace (":","_") }} {
   hardware ethernet {{ host.mac }};
