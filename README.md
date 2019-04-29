@@ -218,6 +218,11 @@ dhcp_hosts:
     ip: 192.168.222.151
 ```
 
+### Specify PXEBoot server
+
+Setting the variable `dhcp_pxeboot_server`, will redirect PXE clients to the specified PXEBoot server in order to boot over the network. The specified server should have boot images on the expected locations. Use e.g. [bertvv.pxeserver](https://galaxy.ansible.com/bertvv/pxeserver) to configure it.
+
+
 ## Dependencies
 
 No dependencies.
