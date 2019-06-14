@@ -5,3 +5,4 @@ dhcp_packages_state: "installed"
 dhcp_subnets: []
 dhcp_global_other_options: []
 dhcp_global_includes: []
+apparmor_fix: true

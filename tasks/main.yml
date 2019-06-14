@@ -16,7 +16,7 @@
   tags: dhcp
 
 - include_tasks: apparmor-fix.yml
-  when: ansible_os_family == 'Debian'
+  when: ansible_os_family == 'Debian' and apparmor_fix|bool
   tags: dhcp
 
 - name: Install includes
