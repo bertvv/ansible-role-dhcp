@@ -1,7 +1,7 @@
 # roles/dhcp/defaults/main.yml
 ---
 
-dhcp_packages_state: "installed"
+dhcp_packages_state: "present"
 dhcp_subnets: []
 dhcp_global_other_options: []
 dhcp_global_includes: []
