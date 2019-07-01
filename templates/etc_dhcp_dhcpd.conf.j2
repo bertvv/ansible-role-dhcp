@@ -193,6 +193,11 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
 {% if subnet.range_begin is defined and subnet.range_end is defined %}
   range {{ subnet.range_begin }} {{ subnet.range_end }};
 {% endif %}
+{% if subnet.ranges is defined %}
+{% for range in subnet.ranges %}
+  range {{ range.begin }} {{ range.end }};
+{% endfor %}
+{% endif %}
 {% if subnet.server_name is defined %}
   server-name {{ subnet.server_name }};
 {% endif %}
@@ -256,7 +261,7 @@ failover peer "{{ pool.failover_peer }}";
 {% endfor %}
 {% if dhcp_hosts is defined %}
 {% for host in dhcp_hosts %}
-host {{ host.name }} {
+host {{ host.name | replace (" ","_") | replace ("'","_") | replace (":","_") }} {
   hardware ethernet {{ host.mac }};
 {% if host.ip is defined %}
   fixed-address {{ host.ip }};
