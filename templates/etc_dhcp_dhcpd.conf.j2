@@ -74,9 +74,11 @@ option domain-search "{{ dhcp_global_domain_search|join('", "') }}";
 {% if dhcp_global_server_name is defined %}
 option server-name "{{ dhcp_global_server_name }}";
 {% endif %}
+{% if dhcp_global_other_options is defined %}
 {% for option in dhcp_global_other_options %}
 option {{ option }};
 {% endfor %}
+{% endif %}
 {% if dhcp_global_includes is defined %}
 
 #
