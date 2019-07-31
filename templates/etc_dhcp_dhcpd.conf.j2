@@ -278,6 +278,14 @@ failover peer "{{ pool.failover_peer }}";
   }
 {% endfor %}
 {% endif %}
+{% if subnet.zones is defined %}
+{% for zone in subnet.zones %}
+  zone {{ zone.name }} {
+    primary {{ zone.primary }};
+    key {{ zone.key }};
+  }
+{% endfor %}
+{% endif %}
 }
 {% endfor %}
 {% if dhcp_hosts is defined %}

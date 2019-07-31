@@ -160,6 +160,7 @@ An alphabetical list of supported options in a subnet declaration:
 | `routers`             | no       | IP address of the gateway for this subnet                             |
 | `server_name`         | no       | Server name sent to the client                                        |
 | `subnet_mask`         | no       | Overrides the `netmask` of the subnet declaration                     |
+| `zones`               | no       | Zones to update for dynamic DNS (3)                                   |
 
 You can specify address pools within a subnet by setting the `pools` options. This allows you to specify a pool of addresses that will be treated differently than another pool of addresses, even on the same network segment or subnet. It is a list of dicts with the following keys, all of which are optional:
 
@@ -189,6 +190,21 @@ You can specify address pools within a subnet by setting the `pools` options. Th
 ranges:
   - { begin: 192.168.222.50, end: 192.168.222.99 }
   - { begin: 192.168.222.110, end: 192.168.222.127 }
+```
+
+(3) Zones take the following fields:
+
+| Option    | Comment                                   |
+| :---      | :---                                      |
+| `name`    | The name of the zone to update            |
+| `key`     | The key to use to secure the DNS update   |
+| `primary` | The DHCP server to update                 |
+
+```Yaml
+zones:
+  - name: example.org.
+    key: 'dhcpupdate'
+    primary: 127.0.0.1
 ```
 
 ### Host declarations
