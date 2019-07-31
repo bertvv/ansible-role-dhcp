@@ -29,6 +29,7 @@ See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for 
 | `dhcp_global_bootp`               | Global bootp (`allow`, `deny`, `ignore`)                               |
 | `dhcp_global_broadcast_address`   | Global broadcast address                                               |
 | `dhcp_global_classes`             | Class definitions with a match statement(1)                            |
+| `dhcp_global_ddns_update_style`   | Dynamic DNS update style                                               |
 | `dhcp_global_default_lease_time`  | Default lease time in seconds                                          |
 | `dhcp_global_domain_name_servers` | A list of IP addresses of DNS servers(2)                               |
 | `dhcp_global_domain_name`         | The domain name the client should use when resolving host names        |

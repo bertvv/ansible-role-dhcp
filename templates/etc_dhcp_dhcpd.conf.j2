@@ -38,6 +38,9 @@ default-lease-time {{ dhcp_global_default_lease_time }};
 {% if dhcp_global_max_lease_time is defined %}
 max-lease-time {{ dhcp_global_max_lease_time }};
 {% endif %}
+{% if dhcp_global_ddns_update_style is defined %}
+ddns-update-style {{ dhcp_global_ddns_update_style }};
+{% endif %}
 {% if dhcp_global_subnet_mask is defined %}
 option subnet-mask {{ dhcp_global_subnet_mask }};
 {% endif %}
