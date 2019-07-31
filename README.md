@@ -127,7 +127,7 @@ The failover peer directive has to be in the definition of address pools (see be
 
 ### Subnet declarations
 
-The role variable `dhcp_subnets` contains a list of dicts, specifying the subnet declarations to be added to the DHCP configuration file. Every subnet declaration should have an `ip` and `netmask`, other options are not mandatory. We start this section with an example, a compelete overview of supported options follows.
+The role variable `dhcp_subnets` contains a list of dicts, specifying the subnet declarations to be added to the DHCP configuration file. Every subnet declaration should have an `ip` and `netmask`, other options are not mandatory. We start this section with an example, a complete overview of supported options follows.
 
 ```Yaml
 dhcp_subnets:
