@@ -2,15 +2,19 @@
 
 Ansible role for setting up ISC DHCPD. The responsibilities of this role are to install packages and manage the configuration ([dhcpd.conf(5)](http://linux.die.net/man/5/dhcpd.conf)). Managing the firewall configuration is NOT a concern of this role. You can do this in your local playbook, or use another role (e.g. [bertvv.rh-base](https://galaxy.ansible.com/bertvv/rh-base).
 
+Refer to the [change log](CHANGELOG.md) for notable changes in each release.
+
+Do you use/like this role? Please consider giving it a star. If you [rate this role](https://galaxy.ansible.com/bertvv/dhcp) on Ansible Galaxy and find it lacking in some respect, please consider opening an Issue with actionable feedback or a PR so we can improve it. Thank you!
+
 ## Requirements
 
 No specific requirements
 
 ## Role Variables
 
-This role is able to set (some) global options, and to specify subnet declarations.
+This role is able to set global options, and to specify subnet declarations.
 
-See the test playbook (see below) for a working example of a DHCP server with two subnets. This section is a reference of all supported options.
+See the [test playbook](https://github.com/bertvv/ansible-role-dhcp/blob/vagrant-tests/test.yml) for a working example of a DHCP server in a test environment based on Vagrant and VirtualBox. This section is a reference of all supported options.
 
 ### Global options
 
