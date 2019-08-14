@@ -4,6 +4,27 @@ This file contains al notable changes to the dhcp Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/).
 
+## 3.0.0
+
+### Added
+
+- (GH-18) The ability to add multiple subnet ranges to a scope. (credit: [Stuart Knight](https://github.com/blofeldthefish))
+- (GH-24) Add parameter `dhcp_apparmor_fix` to enable/disable the AppArmor fix (credit: [Maxim Baranov](https://github.com/mbaran0v))
+- Variable `dhcp_pxeboot_server` in order to allow this role to refer PXEBoot clients to the correct PXEBoot server.
+
+### Changed
+
+- (GH-19) **Breaking change** Fix inconsistency with readme for omapi secret. In the README the `dhcp_global_omapi_secret` is defined as such, whereas in the template it is `dhcp_omapi_secret`. It *should* be `dhcp_global_omapi_secret`. This will break playbooks that use the `dhcp_omapi_secret` variable.
+- (GH-21, GH-25) Define network device in /etc/defaults. This is needed on Debian based distros.
+- (GH-22) Support `include` lines for non-existent files in role's `files/` directory. This allows the user to add `include` lines in dhcpd.conf for non-existent files; files not found in role's `files/` directory. It should permit successful configuration of `dhcpd.conf` with the expectation of another process (role, task, legacy method, etc.) to provide the include file. (credit: [RayfordJ](https://github.com/rayfordj))
+- (GH-23) Removed default value for `dhcp_global_other_options` and test for its definition in the config file template. This is more consistent with how the other role variables are handled in the config file template. (credit: [lijok](https://github.com/lijok))
+- (GH-26) Fixed typo in README (credit [Guillaume Parent](https://github.com/gparent))
+- (GH-27) Use list of packages directly instead of in a `with_items` loop. (credit [Guillaume Parent](https://github.com/gparent))
+- Increased minimum Ansible version to 2.8 due to usage of more recent Ansible syntax (e.g. package installation directly with variable containing list of packages instead of `with_items` loop).
+- Updated list of supported versions to latest stable releases of tested distros (EL 7.6, Fedora 30, Ubuntu 18.04)
+- Use Yamllint configuration from Ansible Galaxy and fix Yamllint warnings
+- Updated Vagrant test environment, in new orphan branch `vagrant-tests`.
+
 ## 2.2.0 - 2018-10-13
 
 ### Added
