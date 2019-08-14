@@ -15,7 +15,7 @@
     line: '  capability dac_override,'
     insertafter: '  capability setuid,'
     state: present
-    create: no
+    create: false
   when: apparmor_policyfile.stat.exists
   failed_when: false
   register: apparmor_fix_1
@@ -27,7 +27,7 @@
     line: '  /home/*/.ansible/** r,'
     insertbefore: '.*/etc/dhcp/ r,'
     state: present
-    create: no
+    create: false
   when: apparmor_policyfile.stat.exists
   failed_when: false
   register: apparmor_fix_2
