@@ -10,4 +10,4 @@
 *.box
 
 # Ignore test code (it's a separate branch worktree)
-tests
+*tests/
