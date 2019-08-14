@@ -10,9 +10,8 @@
 
 - name: Install packages
   package:
-    pkg: "{{ item }}"
+    name: "{{ dhcp_packages }}"
     state: "{{ dhcp_packages_state }}"
-  with_items: "{{ dhcp_packages }}"
   tags: dhcp
 
 - include_tasks: apparmor-fix.yml
