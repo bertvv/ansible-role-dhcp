@@ -93,12 +93,11 @@ dhcp_global_failover:
   mclt: 3600
 ```
 
-An alphabetical list of supported options in a failover declaration:
+The variable `dhcp_global_failover_peer` contains a name for the configured peer, to be used on a per pool basis. The failover declaration options are specified with the variable `dhcp_global_failover`, a dictionary that may contain the following options:
 
 | Option                     | Required | Comment                                                               |
 | :---                       | :---:    | :--                                                                   |
 | `address`                  | no       | This server's IP address                                              |
-| `failover_peer`            | no       | Name of the configured peer, to be used on a per pool basis           |
 | `hba`                      | no       | colon-separated-hex-list                                              |
 | `load_balance_max_seconds` | no       | Cutoff after which load balance is disabled (3 to 5 recommended)      |
 | `max-balance`              | no       | Failover pool balance statement                                       |
