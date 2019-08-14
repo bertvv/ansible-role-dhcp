@@ -1,24 +1,6 @@
 # Ansible role `dhcp`
 
-Ansible role for setting up ISC DHCPD. The responsibilities of this role are to:
-
-- Install packages
-- Manage configuration ([dhcpd.conf(5)](http://linux.die.net/man/5/dhcpd.conf))
-
-The following are NOT concerns of this role:
-
-- Managing firewall configuration: Use e.g. [bertvv.el7](https://galaxy.ansible.com/list#/roles/2305) for this.
-
-## A note on compatibility
-
-Version 2.0.0 of this role uses features that are introduced in Ansible 2.0. Users of older versions of Ansible can use version 1.1.0 which has identical functionality. An overview of role compatibility:
-
-| Role version | Ansible version | Supported platform                         |
-| :---         | :---            | :---                                       |
-| 1.1.0        | 1.7.x - 1.9.x   | CentOS 6-7                                 |
-| 2.0.0        | >= 2.0          | CentOS 6-7, Fedora 23, Ubuntu 14.04, 16.04 |
-
-Only the platforms on which the role was successfully tested are mentioned, but it should also work on other versions of these distributions. If you get it working on another platform, let me know and I will add it to the list.
+Ansible role for setting up ISC DHCPD. The responsibilities of this role are to install packages and manage the configuration ([dhcpd.conf(5)](http://linux.die.net/man/5/dhcpd.conf)). Managing the firewall configuration is NOT a concern of this role. You can do this in your local playbook, or use another role (e.g. [bertvv.rh-base](https://galaxy.ansible.com/bertvv/rh-base).
 
 ## Requirements
 
@@ -28,41 +10,56 @@ No specific requirements
 
 This role is able to set (some) global options, and to specify subnet declarations.
 
-See the test playbook (see below) for a working example of a DHCP server with two subnets. This section is mainly a reference of all supported options.
+See the test playbook (see below) for a working example of a DHCP server with two subnets. This section is a reference of all supported options.
 
 ### Global options
 
-The following variables, when set, will be added to the global section of the DHCP configuration file. There is no default value, so when they are not set, they will be left out.
+The following variables, when set, will be added to the global section of the DHCP configuration file. If there is no default value specified, the corresponding setting will be left out of `dhcpd.conf(5)`.
 
 See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for more information about these options.
 
-| Variable                          | Comments                                                                |
-| :---                              | :---                                                                    |
-| `dhcp_global_authoritative`       | Global authoritative statement (authoritative, not authoritative)       |
-| `dhcp_global_log_facility`        | Global log facility                                                     |
-| `dhcp_global_booting`             | Global booting (allow, deny, ignore)                                    |
-| `dhcp_global_bootp`               | Global bootp (allow, deny, ignore)                                      |
-| `dhcp_global_broadcast_address`   | Global broadcast address                                                |
-| `dhcp_global_classes`             | Class definitions with a match statement(2)                             |
-| `dhcp_global_default_lease_time`  | Default lease time in seconds                                           |
-| `dhcp_global_domain_name_servers` | A list of IP addresses of DNS servers(1)                                |
-| `dhcp_global_domain_name`         | The domain name the client should use when resolving host names         |
-| `dhcp_global_domain_search`       | A list of domain names to be used by the client to locate non-FQDNs(1)  |
-| `dhcp_global_filename`            | Filename to request for boot                                            |
-| `dhcp_global_includes`            | List of config files to be included (from `dhcp_config_dir`)            |
-| `dhcp_global_includes_missing`    | Boolean.  Continue if `includes` file(s) missing from role's files/     |
-| `dhcp_global_max_lease_time`      | Maximum lease time in seconds                                           |
-| `dhcp_global_next_server`         | IP for boot server                                                      |
-| `dhcp_global_ntp_servers`         | List of IP addresses of NTP servers                                     |
-| `dhcp_global_routers`             | IP address of the router                                                |
-| `dhcp_global_server_name`         | Server name sent to the client                                          |
-| `dhcp_global_server_state`        | Service state (started, stopped)                                        |
-| `dhcp_global_subnet_mask`         | Global subnet mask                                                      |
-| `dhcp_global_omapi_port`          | OMAPI port                                                              |
-| `dhcp_global_omapi_secret`        | OMAPI secret                                                            |
-| `dhcp_global_other_options`       | Array of arbitrary additional global options                            |
+| Variable                          | Comments                                                               |
+| :---                              | :---                                                                   |
+| `dhcp_global_authoritative`       | Global authoritative statement (`authoritative`, `not authoritative`)  |
+| `dhcp_global_booting`             | Global booting (`allow`, `deny`, `ignore`)                             |
+| `dhcp_global_bootp`               | Global bootp (`allow`, `deny`, `ignore`)                               |
+| `dhcp_global_broadcast_address`   | Global broadcast address                                               |
+| `dhcp_global_classes`             | Class definitions with a match statement(1)                            |
+| `dhcp_global_default_lease_time`  | Default lease time in seconds                                          |
+| `dhcp_global_domain_name_servers` | A list of IP addresses of DNS servers(2)                               |
+| `dhcp_global_domain_name`         | The domain name the client should use when resolving host names        |
+| `dhcp_global_domain_search`       | A list of domain names to be used by the client to locate non-FQDNs(1) |
+| `dhcp_global_failover`            | Failover peer settings (3)                                             |
+| `dhcp_global_failover_peer`       | Name for the failover peer (e.g. `foo`)                                |
+| `dhcp_global_filename`            | Filename to request for boot                                           |
+| `dhcp_global_includes_missing`    | Boolean.  Continue if `includes` file(s) missing from role's files/    |
+| `dhcp_global_includes`            | List of config files to be included (from `dhcp_config_dir`)           |
+| `dhcp_global_log_facility`        | Global log facility (e.g. `daemon`, `syslog`, `user`, ...)             |
+| `dhcp_global_max_lease_time`      | Maximum lease time in seconds                                          |
+| `dhcp_global_next_server`         | IP for PXEboot server                                                  |
+| `dhcp_global_ntp_servers`         | List of IP addresses of NTP servers                                    |
+| `dhcp_global_omapi_port`          | OMAPI port                                                             |
+| `dhcp_global_omapi_secret`        | OMAPI secret                                                           |
+| `dhcp_global_other_options`       | Array of arbitrary additional global options                           |
+| `dhcp_global_routers`             | IP address of the router                                               |
+| `dhcp_global_server_name`         | Server name sent to the client                                         |
+| `dhcp_global_server_state`        | Service state (started, stopped)                                       |
+| `dhcp_global_subnet_mask`         | Global subnet mask                                                     |
 
-(1) This option may be written either as a list (when you have more than one item), or as a string (when you have only one). The following snippet shows an example of both:
+**Remarks**
+
+(1) This role supports the definition of classes with a match statement, e.g.:
+
+```Yaml
+# Class for VirtualBox VMs
+dhcp_global_classes:
+  - name: vbox
+    match: 'match if binary-to-ascii(16,8,":",substring(hardware, 1, 3)) = "8:0:27"'
+```
+
+Class names can be used in the definition of address pools (see below).
+
+(2) The role variable `dhcp_global_domain_name_servers` may be written either as a list (when you have more than one item), or as a string (when you have only one). The following snippet shows an example of both:
 
 ```Yaml
 # A single DNS server
@@ -74,27 +71,16 @@ dhcp_global_domain_name_servers:
   - 8.8.4.4
 ```
 
-(2) This role supports the definition of classes with a match statement, e.g.:
-
-```Yaml
-# Class for VirtualBox VMs
-dhcp_global_classes:
-  - name: vbox
-    match: 'match if binary-to-ascii(16,8,":",substring(hardware, 1, 3)) = "8:0:27"'
-```
-
-Class names can be used in the definition of address pools (see below).
-
 (3) This role also supports the definition of a failover peer, e.g.:
 
 ```Yaml
 # Failover peer definition
-failover_peer: failover-group
-failover:
+dhcp_global_failover_peer: failover-group
+dhcp_global_failover:
   role: primary # | secondary
-  address: 192.168.56.101
+  address: 192.168.222.2
   port: 647
-  peer_address: 192.168.56.102
+  peer_address: 192.168.222.3
   peer_port: 647
   max_response_delay: 15
   max_unacked_updates: 10
@@ -105,24 +91,24 @@ failover:
 
 An alphabetical list of supported options in a failover declaration:
 
-| Option                	  | Required | Comment                                                               |
-| :---                  	  | :---:    | :--                                                                   |
-| `address`             	  | no       | This server's IP address                                              |
-| `failover_peer`       	  | no       | Name of the configured peer, to be used on a per pool basis           |
-| `hba`                 	  | no       | colon-separated-hex-list                                              |
-| `load_balance_max_seconds`	  | no       | Cutoff after which load balance is disabled (3 to 5 recommended)	     |
-| `max-balance`  		  | no       | Failover pool balance statement					     |
-| `max-lease-misbalance`          | no       | Failover pool balance statement					     |
-| `max-lease-ownership`           | no       | Failover pool balance statement					     |
-| `max_response_delay`  	  | no       | Maximum seconds without contact before engaging failover              |
-| `max_unacked_updates` 	  | no       | Maximum BNDUPD it can send before receiving a BNDACK (10 recommended) |
-| `mclt`                	  | no       | Maximum Client Lead Time                                              |
-| `min-balance`  		  | no       | Failover pool balance statement					     |
-| `peer_address`        	  | no       | Failover peer's IP addres                                             |
-| `peer_port`           	  | no       | This server's port (generally 519/520 or 647/847)                     |
-| `port`                	  | no       | This server's port (generally 519/520 or 647/847)                     |
-| `role`                	  | no       | primary, secondary                                                    |
-| `split`               	  | no       | Load balance split (0-255)                                            |
+| Option                     | Required | Comment                                                               |
+| :---                       | :---:    | :--                                                                   |
+| `address`                  | no       | This server's IP address                                              |
+| `failover_peer`            | no       | Name of the configured peer, to be used on a per pool basis           |
+| `hba`                      | no       | colon-separated-hex-list                                              |
+| `load_balance_max_seconds` | no       | Cutoff after which load balance is disabled (3 to 5 recommended)      |
+| `max-balance`              | no       | Failover pool balance statement                                       |
+| `max-lease-misbalance`     | no       | Failover pool balance statement                                       |
+| `max-lease-ownership`      | no       | Failover pool balance statement                                       |
+| `max_response_delay`       | no       | Maximum seconds without contact before engaging failover              |
+| `max_unacked_updates`      | no       | Maximum BNDUPD it can send before receiving a BNDACK (10 recommended) |
+| `mclt`                     | no       | Maximum Client Lead Time                                              |
+| `min-balance`              | no       | Failover pool balance statement                                       |
+| `peer_address`             | no       | Failover peer's IP addres                                             |
+| `peer_port`                | no       | This server's port (generally 519/520 or 647/847)                     |
+| `port`                     | no       | This server's port (generally 519/520 or 647/847)                     |
+| `role`                     | no       | primary, secondary                                                    |
+| `split`                    | no       | Load balance split (0-255)                                            |
 
 The failover peer directive has to be in the definition of address pools (see below).
 
@@ -223,41 +209,41 @@ dhcp_hosts:
 
 Setting the variable `dhcp_pxeboot_server`, will redirect PXE clients to the specified PXEBoot server in order to boot over the network. The specified server should have boot images on the expected locations. Use e.g. [bertvv.pxeserver](https://galaxy.ansible.com/bertvv/pxeserver) to configure it.
 
-
 ## Dependencies
 
 No dependencies.
 
 ## Example Playbook
 
-See the [test playbook](https://github.com/bertvv/ansible-role-dhcp/blob/tests/test.yml)
+See the [test playbook](https://github.com/bertvv/ansible-role-dhcp/blob/vagrant-tests/test.yml)
 
 ## Testing
 
-Tests for this role are provided in the form of a Vagrant environment that is kept in a separate branch, `tests`. I use [git-worktree(1)](https://git-scm.com/docs/git-worktree) to include the test code into the working directory. Instructions for running the tests:
-
-1. Fetch the tests branch: `git fetch origin tests`
-2. Create a Git worktree for the test code: `git worktree add tests tests` (remark: this requires at least Git v2.5.0). This will create a directory `tests/`.
-3. `cd tests/`
-4. `vagrant up` will then create a VM and apply a test playbook (`test.yml`).
-
-You may want to change the base box into one that you like. The current one, [bertvv/centos72](https://atlas.hashicorp.com/bertvv/boxes/centos72) was generated using a Packer template from the [Boxcutter project](https://github.com/boxcutter/centos) with a few modifications.
-
-## Contributing
-
-Issues, feature requests, ideas are appreciated and can be posted in the Issues section. Pull requests are also very welcome. Preferably, create a topic branch and when submitting, squash your commits into one (with a descriptive message).
+Tests for this role are provided in the form of a Vagrant environment that is kept in a separate branch, `vagrant-tests`. For more information about setting up the test environment and running the tests, refer to the [README](https://github.com/bertvv/ansible-role-dhcp/blob/vagrant-tests/README.md) of the test branch.
 
 ## License
 
 BSD
 
-## Contributors
+## Contributing
 
+Issues, feature requests, ideas are appreciated and can be posted in the Issues section. Pull requests are also very welcome. Preferably, create a topic branch and when submitting, squash your commits into one (with a descriptive message).
+
+### Contributors
+
+- [Ahmed Sghaier](https://github.com/asghaier)
+- [Alessandro Ogier](https://github.com/aogier)
 - [Bert Van Vreckem](https://github.com/bertvv) (maintainer)
 - [Birgit Croux](https://github.com/birgitcroux/)
+- [@cacheira](https://github.com/cacheira)
 - [@donvipre](https://github.com/donvipre)
 - Felix Egli
+- [Guillaume Parent](https://github.com/gparent)
 - [Jonathan Piron](https://github.com/jpiron)
 - [Josh Benner](https://github.com/joshbenner)
+- [@jpiron](https://github.com/jpiron)
+- [@lijok](https://github.com/lijok)
+- [Maxim Baranov](https://github.com/mbaran0v)
+- [@RayfordJ](https://github.com/rayfordj)
 - [Rian Bogle](https://github.com/rbogle/)
-- [Stuart Knight](https://github.com/blofeldthefish)
+- [Stuart Knight](https://github.com/blofeldthefish) (maintainer)
