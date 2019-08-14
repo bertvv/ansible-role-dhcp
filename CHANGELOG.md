@@ -4,7 +4,14 @@ This file contains al notable changes to the dhcp Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/).
 
-## 3.0.0
+## 3.0.1 - 2019-08-14
+
+### Changed
+
+- Fix ansible-lint warnings
+- Update documentation for failover peer documentation
+
+## 3.0.0 - 2019-08-14
 
 ### Added
 
