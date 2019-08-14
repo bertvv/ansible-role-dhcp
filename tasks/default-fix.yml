@@ -1,0 +1,11 @@
+# roles/dhcp/tasks/default-fix.yml
+# This playbook adjusts a required dhcp package "default" file,
+# specific to debian-like installs
+---
+
+- name: Defaults fix | Set a default listening interface
+  lineinfile:
+    dest: /etc/default/isc-dhcp-server
+    line: 'INTERFACESv4="{{ ansible_default_ipv4.interface }}"'
+    regexp: '^INTERFACESv4='
+  tags: dhcp

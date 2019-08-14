@@ -18,6 +18,10 @@
   when: ansible_os_family == 'Debian' and apparmor_fix|bool
   tags: dhcp
 
+- include_tasks: default-fix.yml
+  when: ansible_os_family == 'Debian'
+  tags: dhcp
+
 - name: Install includes
   copy:
     src: "{{ item }}"
