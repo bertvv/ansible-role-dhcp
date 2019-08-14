@@ -18,3 +18,5 @@ roles/*.*
 # Test directories. These are Git worktrees to separate test branches
 *tests/
 
+# Ansible fact gathering cache directory
+.ansible_cache/
