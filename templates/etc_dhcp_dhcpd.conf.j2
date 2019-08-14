@@ -8,10 +8,10 @@
 {% if dhcp_global_omapi_port is defined %}
 omapi-port {{ dhcp_global_omapi_port }};
 {% endif %}
-{% if dhcp_omapi_secret is defined %}
+{% if dhcp_global_omapi_secret is defined %}
 key omapi_key {
     algorithm HMAC-MD5;
-    secret "{{ dhcp_omapi_secret }}";
+    secret "{{ dhcp_global_omapi_secret }}";
 };
 {% endif %}
 {% if dhcp_global_authoritative is defined %}
