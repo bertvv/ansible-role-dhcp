@@ -1,7 +1,8 @@
 # roles/dhcp/tasks/main.yml
 ---
 
-- include_vars: "{{ item }}"
+- name: Load distro-specific variables
+  include_vars: "{{ item }}"
   with_first_found:
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
@@ -27,6 +28,7 @@
     src: "{{ item }}"
     dest: "{{ dhcp_config_dir }}/{{ item | basename }}"
   with_items: "{{ dhcp_global_includes }}"
+  when: dhcp_global_includes is defined
   ignore_errors: "{{ dhcp_global_includes_missing }}"
   tags: dhcp
 

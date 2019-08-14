@@ -18,7 +18,8 @@
     create: false
   when: apparmor_policyfile.stat.exists
   failed_when: false
-  register: apparmor_fix_1
+  #register: apparmor_fix_1
+  notify: restart apparmor
   tags: dhcp
 
 - name: AppArmor fix | Ensure dhcpd can acces temp config file for validation (2/2)
@@ -30,12 +31,16 @@
     create: false
   when: apparmor_policyfile.stat.exists
   failed_when: false
-  register: apparmor_fix_2
+  #register: apparmor_fix_2
+  notify: restart apparmor
   tags: dhcp
 
-- name: AppArmor fix | Restart AppArmor
-  service:
-    name: apparmor
-    state: restarted
-  when: apparmor_fix_1.changed or apparmor_fix_2.changed
-  tags: dhcp
+- name: Force running handlers now
+  meta: flush_handlers
+
+#- name: AppArmor fix | Restart AppArmor
+#  service:
+#    name: apparmor
+#    state: restarted
+#  when: apparmor_fix_1.changed or apparmor_fix_2.changed
+#  tags: dhcp
