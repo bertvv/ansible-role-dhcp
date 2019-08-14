@@ -79,68 +79,68 @@ option server-name "{{ dhcp_global_server_name }}";
 option {{ option }};
 {% endfor %}
 {% endif %}
-{% if dhcp_global_includes is defined %}
-{% if failover_peer is defined %}
+{% if dhcp_global_failover_peer is defined %}
 
 #
 # DHCP Failover config
 #
 # Notes: In the past couple years, TCP ports 647 (primary) and 847 (peer) have
-# emerged as the standard bindings for DHCP failover. It is worth noting that as
+# emerged as the standard bindings for DHCP dhcp_global_failover It is worth noting that as
 # recently as 2005, the dhcpd.conf(5) man page used ports 519 and 520 in its
 # failover example, but 647 and 847 look like good choices as of 2008. However,
 # the dhcpd.conf(5) man page says that the primary port and the peer port may be
 # the same number.
 
-failover peer "{{ failover_peer }}" {
-{% if failover.role is defined %}
+failover peer "{{ dhcp_global_failover_peer }}" {
+{% if dhcp_global_failover.role is defined %}
    # [ primary | secondary ];
-   {{ failover.role }};
+   {{ dhcp_global_failover.role }};
 {% endif %}
-{% if failover.address is defined %}
-  address {{ failover.address }};
+{% if dhcp_global_failover.address is defined %}
+  address {{ dhcp_global_failover.address }};
 {% endif %}
-{% if failover.port is defined %}
-  port {{ failover.port }};
+{% if dhcp_global_failover.port is defined %}
+  port {{ dhcp_global_failover.port }};
 {% endif %}
-{% if failover.peer_address is defined %}
-  peer address {{ failover.peer_address }};
+{% if dhcp_global_failover.peer_address is defined %}
+  peer address {{ dhcp_global_failover.peer_address }};
 {% endif %}
-{% if failover.peer_port is defined %}
-  peer port {{ failover.peer_port }};
+{% if dhcp_global_failover.peer_port is defined %}
+  peer port {{ dhcp_global_failover.peer_port }};
 {% endif %}
-{% if failover.max_response_delay is defined %}
-  max-response-delay {{ failover.max_response_delay }};
+{% if dhcp_global_failover.max_response_delay is defined %}
+  max-response-delay {{ dhcp_global_failover.max_response_delay }};
 {% endif %}
-{% if failover.max_unacked_updates is defined %}
-  max-unacked-updates {{ failover.max_unacked_updates }};
+{% if dhcp_global_failover.max_unacked_updates is defined %}
+  max-unacked-updates {{ dhcp_global_failover.max_unacked_updates }};
 {% endif %}
-{% if failover.split is defined %}
-  split {{ failover.split }};
+{% if dhcp_global_failover.split is defined %}
+  split {{ dhcp_global_failover.split }};
 {% endif %}
-{% if failover.hba is defined %}
-  hba {{ failover.hba }};
+{% if dhcp_global_failover.hba is defined %}
+  hba {{ dhcp_global_failover.hba }};
 {% endif %}
-{% if failover.mclt is defined %}
-  mclt {{ failover.mclt }};
+{% if dhcp_global_failover.mclt is defined %}
+  mclt {{ dhcp_global_failover.mclt }};
 {% endif %}
-{% if failover.load_balance_max_seconds is defined %}
-  load balance max seconds {{ failover.load_balance_max_seconds }};
+{% if dhcp_global_failover.load_balance_max_seconds is defined %}
+  load balance max seconds {{ dhcp_global_failover.load_balance_max_seconds }};
 {% endif %}
-{% if failover.max_lease_misbalance is defined %}
-  max-lease-misbalance {{ failover.max_lease_misbalance }};
+{% if dhcp_global_failover.max_lease_misbalance is defined %}
+  max-lease-misbalance {{ dhcp_global_failover.max_lease_misbalance }};
 {% endif %}
-{% if failover.max_lease_ownership is defined %}
-  max-lease-ownership {{ failover.max_lease_ownership }};
+{% if dhcp_global_failover.max_lease_ownership is defined %}
+  max-lease-ownership {{ dhcp_global_failover.max_lease_ownership }};
 {% endif %}
-{% if failover.min_balance is defined %}
-  min-balance {{ failover.min_balance }};
+{% if dhcp_global_failover.min_balance is defined %}
+  min-balance {{ dhcp_global_failover.min_balance }};
 {% endif %}
-{% if failover.max_balance is defined %}
-  max-balance {{ failover.max_balance }};
+{% if dhcp_global_failover.max_balance is defined %}
+  max-balance {{ dhcp_global_failover.max_balance }};
 {% endif %}
 }
 {% endif %}
+{% if dhcp_global_includes is defined %}
 #
 # Includes
 #
