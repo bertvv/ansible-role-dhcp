@@ -140,11 +140,20 @@ failover peer "{{ dhcp_global_failover_peer }}" {
 {% endif %}
 }
 {% endif %}
-{% if dhcp_global_includes is defined %}
+{% if dhcp_global_includes is defined%}
 #
 # Includes
 #
 {% for include in dhcp_global_includes %}
+include "{{ dhcp_config_dir }}/{{ include | basename }}";
+{% endfor %}
+{% endif %}
+
+{% if dhcp_custom_includes is defined%}
+#
+# Custom Includes
+#
+{% for include in dhcp_custom_includes %}
 include "{{ dhcp_config_dir }}/{{ include | basename }}";
 {% endfor %}
 {% endif %}
