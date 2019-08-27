@@ -49,6 +49,7 @@ See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for 
 | `dhcp_global_server_name`         | Server name sent to the client                                         |
 | `dhcp_global_server_state`        | Service state (started, stopped)                                       |
 | `dhcp_global_subnet_mask`         | Global subnet mask                                                     |
+| `dhcp_custom_includes`            | List of jinja config files to be included (from `dhcp_config_dir`)        |
 
 **Remarks**
 
