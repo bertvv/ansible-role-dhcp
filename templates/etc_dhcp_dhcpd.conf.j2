@@ -201,6 +201,13 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
   option domain-name-servers {{ subnet.domain_name_servers|join(', ') }};
 {% endif %}
 {% endif %}
+{% if subnet.ntp_servers is defined %}
+{% if subnet.ntp_servers is string %}
+option ntp-servers {{ subnet.ntp_servers }};
+{% else %}
+option ntp-servers {{ subnet.ntp_servers|join(', ') }};
+{% endif %}
+{% endif %}
 {% if subnet.range_begin is defined and subnet.range_end is defined %}
   range {{ subnet.range_begin }} {{ subnet.range_end }};
 {% endif %}

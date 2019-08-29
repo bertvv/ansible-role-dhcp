@@ -152,6 +152,7 @@ An alphabetical list of supported options in a subnet declaration:
 | `max_lease_time`      | no       | Maximum lease time for this subnet (in seconds)                       |
 | `netmask`             | yes      | **Required.** Network mask of the subnet (in dotted decimal notation) |
 | `next_server`         | no       | IP address of the boot server                                         |
+| `ntp_servers`         | no       | List of NTP servers for this subnet                                   |
 | `range_begin`         | no       | Lowest address in the range of dynamic IP addresses to be assigned    |
 | `range_end`           | no       | Highest address in the range of dynamic IP addresses to be assigned   |
 | `ranges`              | no       | If multiple ranges are needed, they can be specified as a list (2)    |
