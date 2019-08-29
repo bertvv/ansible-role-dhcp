@@ -23,6 +23,17 @@
   when: ansible_os_family == 'Debian'
   tags: dhcp
 
+- name: Install custom includes
+  template:
+    src: "{{ item }}"
+    dest: "{{ dhcp_config_dir }}/{{ item | basename }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items: "{{ dhcp_custom_includes }}"
+  when: dhcp_custom_includes is defined
+  tags: dhcp
+
 - name: Install includes
   copy:
     src: "{{ item }}"

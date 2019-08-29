@@ -149,6 +149,15 @@ include "{{ dhcp_config_dir }}/{{ include | basename }}";
 {% endfor %}
 {% endif %}
 
+{% if dhcp_custom_includes is defined%}
+#
+# Custom Includes
+#
+{% for include in dhcp_custom_includes %}
+include "{{ dhcp_config_dir }}/{{ include | basename }}";
+{% endfor %}
+{% endif %}
+
 {% if dhcp_global_classes is defined %}
 #
 # Classes
