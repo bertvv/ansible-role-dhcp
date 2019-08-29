@@ -32,6 +32,7 @@
     mode: 0644
   with_items: "{{ dhcp_custom_includes }}"
   when: dhcp_custom_includes is defined
+  notify: restart dhcp
   tags: dhcp
 
 - name: Install includes
