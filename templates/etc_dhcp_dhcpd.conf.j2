@@ -71,6 +71,12 @@ option domain-search "{{ dhcp_global_domain_search }}";
 option domain-search "{{ dhcp_global_domain_search|join('", "') }}";
 {% endif %}
 {% endif %}
+{% if dhcp_global_ddns_updates is defined %}
+ddns-updates {{ dhcp_global_ddns_updates }};
+ddns-update-style {{ dhcp_ddns_update_stlye | default("interim") }};
+{{ dhcp_global_ddns_client_updates | default("ignore") }} client-updates;
+update-static-leases {{ dhcp_global_ddns_update_static_leases | default("off") }};
+{% endif %}
 {% if dhcp_global_server_name is defined %}
 option server-name "{{ dhcp_global_server_name }}";
 {% endif %}
@@ -170,6 +176,22 @@ class "{{ class.name }}" {
 }
 {% endfor %}
 {% endif %}
+
+#
+# Key and Zone declaration for DNS update
+#
+{% for key in dhcp_keys %}
+key {{ key.name }} {
+  algorithm {{ key.algorithm }};
+  secret {{ key.secret }};
+};
+{% endfor %}
+{% for zone in dhcp_zones %}
+zone {{ zone.name }} {
+  primary {{ zone.primary }};
+  key {{ zone.key }};
+}
+{% endfor %}
 #
 # Subnet declarations
 #
@@ -231,11 +253,17 @@ option ntp-servers {{ subnet.ntp_servers|join(', ') }};
 {% if subnet.booting is defined %}
 {{ subnet.booting }} booting;
 {% endif %}
+{% if subnet.ddns_domainname is defined %}
+  ddns-domainname "{{ subnet.ddns_domainname }}";
+{% endif %}
 {% if subnet.hosts is defined %}
 {% for host in subnet.hosts %}
   host {{ host.name }} {
     hardware ethernet {{ host.mac }};
     fixed-address {{ host.ip }};
+{% if dhcp_global_ddns_updates is defined %}
+    ddns-hostname {{ host.name | replace (" ","-") | replace ("'","-") | replace (":","-") | replace ("_","-") }};
+{% endif %}
   }
 {% endfor %}
 {% endif %}
@@ -287,6 +315,9 @@ host {{ host.name | replace (" ","_") | replace ("'","_") | replace (":","_") }}
   hardware ethernet {{ host.mac }};
 {% if host.ip is defined %}
   fixed-address {{ host.ip }};
+{% endif %}
+{% if dhcp_global_ddns_updates is defined %}
+  ddns-hostname {{ host.name | replace (" ","-") | replace ("'","-") | replace (":","-") | replace ("_","-") }};
 {% endif %}
 }
 {% endfor %}

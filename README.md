@@ -29,6 +29,7 @@ See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for 
 | `dhcp_global_bootp`               | Global bootp (`allow`, `deny`, `ignore`)                               |
 | `dhcp_global_broadcast_address`   | Global broadcast address                                               |
 | `dhcp_global_classes`             | Class definitions with a match statement(1)                            |
+| `dhcp_global_ddns_updates`        | Enable DDNS updates to DNS servers                                     |
 | `dhcp_global_default_lease_time`  | Default lease time in seconds                                          |
 | `dhcp_global_domain_name_servers` | A list of IP addresses of DNS servers(2)                               |
 | `dhcp_global_domain_name`         | The domain name the client should use when resolving host names        |
@@ -116,6 +117,48 @@ The variable `dhcp_global_failover_peer` contains a name for the configured peer
 
 The failover peer directive has to be in the definition of address pools (see below).
 
+### DDNS updates
+
+The role allows to add hosts via DDNS to domain name servers.
+
+You will need the following:
+
+* A key for communication with the primary DNS server
+* Zone definitions
+* `dhcp_global_ddns_updates: on
+* A domain name in the subnet where hosts that should update are defined
+
+```dhcp_global_ddns_updates: on
+dhcp_keys:
+  - name: EXAMPLE
+    algorithm: hmac-md5
+    secret: "mysecretkeyhash"
+dhcp_zones:
+  - name: 42.168.192.in-addr.arpa
+    primary: 192.168.42.19
+    key: EXAMPLE
+  - name: example.com
+    primary: 192.168.42.19
+    key: EXAMPLE
+dhcp_subnets:
+  - ip: 192.168.42.0
+    netmask: 255.255.255.0
+    domain_name_servers: 192.168.42.19
+    range_begin: 192.168.42.150
+    range_end: 192.168.42.250
+    routers: 192.168.42.1
+    ddns_domainname: example.com
+    hosts:
+      - name: cl1
+        mac: '00:11:22:33:44:55'
+        ip: 192.168.42.69
+        ddns-hostname: gulveig
+```
+
+The `ddns-hostname` is automatically set to a valid DNS name that matches the name of the host.
+
+More on DDNS with dhcpd can be found in the [Debian Wiki](https://wiki.debian.org/DDNS).
+
 ### Subnet declarations
 
 The role variable `dhcp_subnets` contains a list of dicts, specifying the subnet declarations to be added to the DHCP configuration file. Every subnet declaration should have an `ip` and `netmask`, other options are not mandatory. We start this section with an example, a complete overview of supported options follows.
@@ -134,6 +177,7 @@ dhcp_subnets:
     max_lease_time: 7200
     netmask: 255.255.255.128
     domain_name_servers: 10.0.2.3
+    ddns_domainname: example.com
     routers: 192.168.222.129
 ```
 
@@ -143,9 +187,11 @@ An alphabetical list of supported options in a subnet declaration:
 | :---                  | :---:    | :--                                                                   |
 | `booting`             | no       | allow,deny,ignore                                                     |
 | `bootp`               | no       | allow,deny,ignore                                                     |
+| `ddns_domainname`     | no       | DNS domain to add hosts to                                            |
 | `default_lease_time`  | no       | Default lease time for this subnet (in seconds)                       |
 | `domain_name_servers` | no       | List of domain name servers for this subnet(1)                        |
 | `domain_search`       | no       | List of domain names for resolution of non-FQDNs(1)                   |
+| `ddns_domainname`     | no       | DNS domain to add hosts to                                            |
 | `filename`            | no       | filename to retrieve from boot server                                 |
 | `hosts`               | no       | List of fixed IP address hosts for each subnet, similar to dhcp_hosts |
 | `ip`                  | yes      | **Required.** IP address of the subnet                                |
@@ -313,3 +359,4 @@ Issues, feature requests, ideas are appreciated and can be posted in the Issues 
 - [@RayfordJ](https://github.com/rayfordj)
 - [Rian Bogle](https://github.com/rbogle/)
 - [Stuart Knight](https://github.com/blofeldthefish) (maintainer)
+- [Thomas Widhalm](https://github.com/widhalmt)
