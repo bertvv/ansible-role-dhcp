@@ -4,6 +4,12 @@ This file contains al notable changes to the dhcp Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/).
 
+## 3.0.2 - 2019-08-29
+
+### Added
+
+- (GH-29) The ability to add customised config snippets, whilst using a locally defined (outside of this role) Jinja Template.  (credit: [Alex Gittings](https://github.com/minitriga))
+
 ## 3.0.1 - 2019-08-14
 
 ### Changed

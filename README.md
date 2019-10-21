@@ -49,6 +49,7 @@ See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for 
 | `dhcp_global_server_name`         | Server name sent to the client                                         |
 | `dhcp_global_server_state`        | Service state (started, stopped)                                       |
 | `dhcp_global_subnet_mask`         | Global subnet mask                                                     |
+| `dhcp_custom_includes`            | List of jinja config files to be included (from `dhcp_config_dir`)     |
 
 **Remarks**
 
@@ -151,6 +152,7 @@ An alphabetical list of supported options in a subnet declaration:
 | `max_lease_time`      | no       | Maximum lease time for this subnet (in seconds)                       |
 | `netmask`             | yes      | **Required.** Network mask of the subnet (in dotted decimal notation) |
 | `next_server`         | no       | IP address of the boot server                                         |
+| `ntp_servers`         | no       | List of NTP servers for this subnet                                   |
 | `range_begin`         | no       | Lowest address in the range of dynamic IP addresses to be assigned    |
 | `range_end`           | no       | Highest address in the range of dynamic IP addresses to be assigned   |
 | `ranges`              | no       | If multiple ranges are needed, they can be specified as a list (2)    |
@@ -212,6 +214,66 @@ dhcp_hosts:
 
 Setting the variable `dhcp_pxeboot_server`, will redirect PXE clients to the specified PXEBoot server in order to boot over the network. The specified server should have boot images on the expected locations. Use e.g. [bertvv.pxeserver](https://galaxy.ansible.com/bertvv/pxeserver) to configure it.
 
+### Custom Includes
+
+Setting the variable `dhcp_custom_inludes` to a jinja template will allow custom configurations to be used which will subsiquently be included into the `dhcpd.conf` file. 
+
+```Yaml
+dhcp_custom_includes:
+  - custom-dhcp-config.conf
+```
+
+You can create your own variables to use within the template allowing for total flexibility. To avoid variable conflicts make sure that you use variables that are not referenced within this role as this will duplicate configuration in multiple `.conf` files.
+
+```Yaml
+    dhcp_custom_hosts:
+      - name: Juniper1
+        mac: 'de:ad:c0:de:ca:fe'
+        ip: 192.168.35.160
+        options:
+          - name: tftp-server-name
+            value: 192.168.35.152
+          - name: host-name
+            value: Juniper1
+          - name: NEW_OP.transfer-mode
+            value: "http"
+          - name: NEW_OP.config-file-name
+            value: "/configurations/j1-switch.config"
+```
+
+Finally the jinja template must contain valid ISC DHCPD configuration ([dhcpd.conf(5)](http://linux.die.net/man/5/dhcpd.conf)). This is an example of using [bertvv.dhcp](https://galaxy.ansible.com/bertvv/dhcp) for juniper Zero-Touch-Provisioning.
+
+```Jinja
+option space NEW_OP;
+option NEW_OP.image-file-name code 0 = text;
+option NEW_OP.config-file-name code 1 = text;
+option NEW_OP.image-file-type code 2 = text;
+option NEW_OP.transfer-mode code 3 = text;
+option NEW_OP.alt-image-file-name code 4= text;
+option NEW_OP.http-port code 5= text;
+option NEW_OP-encapsulation code 43 = encapsulate NEW_OP;
+
+{% if dhcp_custom_hosts is defined %}
+
+#
+# Host declarations
+#
+{% for host in dhcp_custom_hosts %}
+host {{ host.name | replace (" ","_") | replace ("'","_") | replace (":","_") }} {
+  hardware ethernet {{ host.mac }};
+{% if host.ip is defined %}
+  fixed-address {{ host.ip }};
+{% endif %}
+{% if host.options is defined %}
+{% for option in host.options %}
+  {{ option.name }} "{{ option.value }}"
+{% endfor %}
+{% endif %}
+}
+{% endfor %}
+{% endif %}
+```
+
 ## Dependencies
 
 No dependencies.
@@ -236,6 +298,7 @@ Issues, feature requests, ideas are appreciated and can be posted in the Issues 
 
 - [Ahmed Sghaier](https://github.com/asghaier)
 - [Alessandro Ogier](https://github.com/aogier)
+- [Alex Gittings](https://github.com/minitriga)
 - [Bert Van Vreckem](https://github.com/bertvv) (maintainer)
 - [Birgit Croux](https://github.com/birgitcroux/)
 - [@cacheira](https://github.com/cacheira)
