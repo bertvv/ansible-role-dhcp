@@ -1,4 +1,4 @@
-# roles/dhcp/vars/Debian.yml
+# roles/dhcp/vars/Alpine.yml
 ---
 
 dhcp_packages:
