@@ -181,6 +181,9 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
 {% if subnet.max_lease_time is defined %}
   max-lease-time {{ subnet.max_lease_time }};
 {% endif %}
+{% if subnet.interface is defined %}
+  interface {{ subnet.interface }};
+{% endif %}
 {% if subnet.routers is defined %}
   option routers {{ subnet.routers }};
 {% endif %}
