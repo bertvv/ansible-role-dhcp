@@ -3,6 +3,10 @@
 
 dhcp_packages:
   - dhcp
+  - git
+  - python3
+  - python3-devel
+  - python3-pip
 
 dhcp_config_dir: /etc/dhcp
 

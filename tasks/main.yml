@@ -1,6 +1,5 @@
 # roles/dhcp/tasks/main.yml
 ---
-
 - name: Load distro-specific variables
   include_vars: "{{ item }}"
   with_first_found:
@@ -68,3 +67,18 @@
     state: "{{ dhcp_global_server_state | default('started') }}"
     enabled: true
   tags: dhcp
+
+- name: Open port in firewall for HA Sync.
+  become: yes
+  firewalld:
+    port: "{{ dhcp_global_failover.port }}/tcp"
+    permanent: yes
+    state: enabled
+  when: ansible_os_family == "RedHat"
+  notify: restart firewall
+
+- include_tasks: prometheus_exporter.yml
+  when: dhcp_install_exporter
+  tags: 
+    - dhcp
+    - prometheus_exporter

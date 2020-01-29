@@ -1,0 +1,30 @@
+---
+- name: Clone dhcp-stats-prometheus repo.
+  git:
+    repo: '{{ exporter.git_repo }}'
+    dest: '{{ exporter.install_path }}'
+    force: true
+    accept_hostkey: true
+
+- name: Install exporter pip dependencies.
+  pip:
+    requirements: '{{ exporter.install_path }}/requirements.txt'
+    state: present
+    executable: pip3
+
+- name: Create service for data exporter.
+  template:
+    src: lib/systemd/system/service.j2
+    dest: /lib/systemd/system/dhcp-stats-prometheus-exporter.service
+    owner: root
+    group: root
+  notify: restart prometheus exporter
+
+- name: Open port in firewall for node exporter.
+  become: yes
+  firewalld:
+    port: "8000/tcp"
+    permanent: yes
+    state: enabled
+  when: ansible_os_family == "RedHat"
+  notify: restart firewall

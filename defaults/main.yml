@@ -5,3 +5,11 @@ dhcp_apparmor_fix: true
 dhcp_global_includes_missing: false
 dhcp_packages_state: "present"
 dhcp_subnets: []
+
+dhcp_install_exporter: false
+
+exporter:
+  git_repo: https://github.com/npflan/dhcpd_exporter
+  install_path: '/opt/dhcp-stats-prometheus'
+  user: root
+  dhcp_leases: /var/lib/dhcpd/dhcpd.leases

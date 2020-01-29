@@ -10,3 +10,17 @@
   service:
     name: apparmor
     state: restarted
+
+- name: restart prometheus exporter
+  systemd:
+    daemon_reload: yes 
+    name: dhcp-stats-prometheus-exporter
+    state: restarted
+    enabled: yes
+
+- name: restart firewall
+  systemd:
+    daemon_reload: yes 
+    name: firewalld
+    state: restarted
+    enabled: yes

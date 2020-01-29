@@ -1,0 +1,14 @@
+[Unit]
+Description=Data exporter for isc-dhcp-server pools
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User={{ exporter.user }}
+ExecStart=/usr/bin/env python3 {{ exporter.install_path }}/dhcpd_exporter.py {{ exporter.dhcp_leases }}
+
+[Install]
+WantedBy=multi-user.target
