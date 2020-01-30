@@ -12,4 +12,5 @@ exporter:
   git_repo: https://github.com/npflan/dhcpd_exporter
   install_path: '/opt/dhcp-stats-prometheus'
   user: root
+  port: 8080
   dhcp_leases: /var/lib/dhcpd/dhcpd.leases
