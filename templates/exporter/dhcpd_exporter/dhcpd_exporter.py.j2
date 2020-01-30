@@ -1,0 +1,65 @@
+from isc_dhcp_leases import Lease, IscDhcpLeases
+from prometheus_client import start_http_server, Gauge
+import urllib
+import os
+import csv
+import io
+from ipaddress import IPv4Network, IPv4Address
+
+import sys
+import time
+
+if len(sys.argv) < 2:
+    # Needs file argument
+    print("Needs leases file argument")
+    exit(-1)
+
+# Define metrics
+TOTAL_LEASES = Gauge('total_leases', 'Total amount of leases valid and invalid')
+TOTAL_CURRENT = Gauge('total_current', 'Total amount of current valid leases')
+USAGE_PER_SCOPE = Gauge('usage_per_scope', 'Currently in use leases per scope', ['scope'])
+SIZE_PER_SCOPE = Gauge('size_per_scope', 'Size of scope', ['scope'])
+
+dhcpd_leases = sys.argv[1]
+
+# Instantiate and parse DHCPD leases file
+leases = IscDhcpLeases(dhcpd_leases)
+
+subnets = []
+
+{% for pool in dhcp_public_pools %}
+subnets.append(IPv4Network('{{ pool.prefix }}'))
+{% endfor %}
+
+def generate_per_scope():
+    used_ips = 0
+    for network in subnets:
+        used_ips = 0
+        used_ips_list = []
+        for lease in leases.get():
+            if lease.valid and lease.active:
+                if IPv4Address(lease.ip) in network and IPv4Address(lease.ip) not in used_ips_list:
+                    used_ips = used_ips + 1
+                    used_ips_list.append(IPv4Address(lease.ip))            
+        USAGE_PER_SCOPE.labels(network).set(used_ips)
+        SIZE_PER_SCOPE.labels(network).set(network.num_addresses-2)
+        
+
+
+TOTAL_LEASES.set_function(lambda: len(leases.get()))
+TOTAL_CURRENT.set_function(lambda: len(leases.get_current().keys()))
+
+# Start HTTP server
+start_http_server({{ exporter.port }})
+
+while True:
+    # Instantiate and parse DHCPD leases file
+    leases = IscDhcpLeases(dhcpd_leases)
+
+    TOTAL_LEASES.set_function(lambda: len(leases.get()))
+    TOTAL_CURRENT.set_function(lambda: len(leases.get_current()))
+
+    generate_per_scope()
+
+    time.sleep(5)
+

@@ -1,0 +1,35 @@
+---
+- name: Import Python script and requirements
+  template:
+    src: 'exporter/dhcpd_exporter/{{ item }}.j2'
+    dest: '{{ exporter.install_path }}/{{ item }}'
+    owner: root
+    group: root
+  notify: restart prometheus exporter
+  with_items:
+    - data.csv
+    - dhcpd_exporter.py
+    - requirements.txt
+
+- name: Install exporter pip dependencies.
+  pip:
+    requirements: '{{ exporter.install_path }}/requirements.txt'
+    state: present
+    executable: pip3
+
+- name: Create service for data exporter.
+  template:
+    src: exporter/service.j2
+    dest: /lib/systemd/system/dhcp-stats-prometheus-exporter.service
+    owner: root
+    group: root
+  notify: restart prometheus exporter
+
+- name: Open port in firewall for node exporter.
+  become: yes
+  firewalld:
+    port: "{{ exporter.port }}/tcp"
+    permanent: yes
+    state: enabled
+  when: ansible_os_family == "RedHat"
+  notify: restart firewall
