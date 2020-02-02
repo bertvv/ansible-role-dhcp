@@ -242,6 +242,11 @@ option ntp-servers {{ subnet.ntp_servers|join(', ') }};
   }
 {% endfor %}
 {% endif %}
+{% if subnet.dhcp_options is defined %}
+{% for dhcp_option in subnet.dhcp_options %}
+  {{ dhcp_option }};
+{% endfor %}
+{% endif %}
 {% if subnet.pools is defined %}
   # Address pool(s)
 {% for pool in subnet.pools %}
