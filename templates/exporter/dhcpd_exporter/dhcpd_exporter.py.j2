@@ -28,7 +28,7 @@ leases = IscDhcpLeases(dhcpd_leases)
 subnets = []
 
 {% for subnet in dhcp_subnets %}
-subnets.append(IPv4Network('{{ subnet.ip }}'))
+subnets.append(IPv4Network('{{ subnet.ip }}/{{ subnet.netmask }}'))
 {% endfor %}
 
 def generate_per_scope():
@@ -62,4 +62,3 @@ while True:
     generate_per_scope()
 
     time.sleep(5)
-
