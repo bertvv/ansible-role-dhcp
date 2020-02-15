@@ -7,7 +7,6 @@
     group: root
   notify: restart prometheus exporter
   with_items:
-    - data.csv
     - dhcpd_exporter.py
     - requirements.txt
 
