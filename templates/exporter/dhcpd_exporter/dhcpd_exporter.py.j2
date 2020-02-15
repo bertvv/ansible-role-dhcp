@@ -43,8 +43,6 @@ def generate_per_scope():
                     used_ips_list.append(IPv4Address(lease.ip))            
         USAGE_PER_SCOPE.labels(network).set(used_ips)
         SIZE_PER_SCOPE.labels(network).set(network.num_addresses-2)
-        
-
 
 TOTAL_LEASES.set_function(lambda: len(leases.get()))
 TOTAL_CURRENT.set_function(lambda: len(leases.get_current().keys()))
@@ -61,4 +59,4 @@ while True:
 
     generate_per_scope()
 
-    time.sleep(5)
+    time.sleep({{ exporter.update_time }})
