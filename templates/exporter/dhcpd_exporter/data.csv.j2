@@ -1,4 +1,0 @@
-prefix,vrf,tenant,site,vlan_group,vlan_vid,status,role,is_pool,description
-{% for pool in dhcp_public_pools %}
-{{ pool.prefix }},none,LanETS,PDC,,{{ pool.vlan }},Active,Player Network,,,
-{% endfor %}
