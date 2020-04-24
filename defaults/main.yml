@@ -5,3 +5,4 @@ dhcp_apparmor_fix: true
 dhcp_global_includes_missing: false
 dhcp_packages_state: "present"
 dhcp_subnets: []
+dhcp_debian_interfaces_v4: "{{ ansible_default_ipv4.interface }}"

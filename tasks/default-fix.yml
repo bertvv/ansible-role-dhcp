@@ -6,6 +6,6 @@
 - name: Defaults fix | Set a default listening interface
   lineinfile:
     dest: /etc/default/isc-dhcp-server
-    line: 'INTERFACESv4="{{ ansible_default_ipv4.interface }}"'
+    line: 'INTERFACESv4="{{ dhcp_debian_interfaces_v4 }}"'
     regexp: '^INTERFACESv4='
   tags: dhcp
