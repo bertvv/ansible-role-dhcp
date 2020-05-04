@@ -216,7 +216,7 @@ Setting the variable `dhcp_pxeboot_server`, will redirect PXE clients to the spe
 
 ### Custom Includes
 
-Setting the variable `dhcp_custom_inludes` to a jinja template will allow custom configurations to be used which will subsiquently be included into the `dhcpd.conf` file. 
+Setting the variable `dhcp_custom_inludes` to a jinja template will allow custom configurations to be used which will subsequently be included into the `dhcpd.conf` file.
 
 ```Yaml
 dhcp_custom_includes:
