@@ -1,0 +1,12 @@
+# roles/dhcp/vars/Alpine.yml
+---
+
+dhcp_packages:
+  - dhcp
+
+dhcp_config_dir: /etc/dhcp
+
+dhcp_config: /etc/dhcp/dhcpd.conf
+
+dhcp_service: dhcpd
+
