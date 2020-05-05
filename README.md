@@ -162,16 +162,17 @@ An alphabetical list of supported options in a subnet declaration:
 
 You can specify address pools within a subnet by setting the `pools` options. This allows you to specify a pool of addresses that will be treated differently than another pool of addresses, even on the same network segment or subnet. It is a list of dicts with the following keys, all of which are optional:
 
-| Option                | Comment                                             |
-| :---                  | :---                                                |
-| `allow`               | Specifies which hosts are allowed in this pool(1)   |
-| `default_lease_time`  | The default lease time for this pool                |
-| `deny`                | Specifies which hosts are not allowed in this pool  |
-| `domain_name_servers` | The domain name servers to be used for this pool(1) |
-| `max_lease_time`      | The maximum lease time for this pool                |
-| `min_lease_time`      | The minimum lease time for this pool                |
-| `range_begin`         | The lowest address in this pool                     |
-| `range_end`           | The highest address in this pool                    |
+| Option                | Comment                                                            |
+| :---                  | :---                                                               |
+| `allow`               | Specifies which hosts are allowed in this pool(1)                  |
+| `default_lease_time`  | The default lease time for this pool                               |
+| `deny`                | Specifies which hosts are not allowed in this pool                 |
+| `domain_name_servers` | The domain name servers to be used for this pool(1)                |
+| `max_lease_time`      | The maximum lease time for this pool                               |
+| `min_lease_time`      | The minimum lease time for this pool                               |
+| `range_begin`         | The lowest address in this pool                                    |
+| `range_end`           | The highest address in this pool                                   |
+| `ranges`              | If multiple ranges are needed, they can be specified as a list (2) |
 
 (1) For the `allow` and `deny` fields, the options are enumerated in [dhcpd.conf(5)](http://linux.die.net/man/5/dhcpd.conf), but include:
 
