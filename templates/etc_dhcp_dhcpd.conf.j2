@@ -247,7 +247,7 @@ option ntp-servers {{ subnet.ntp_servers|join(', ') }};
   pool {
 {% if pool.failover_peer is defined %}
 # This pool has failover, see above for server details
-failover peer "{{ pool.failover_peer }}";
+    failover peer "{{ pool.failover_peer }}";
 {% endif %}
 {% if pool.domain_name_servers is defined %}
 {% if pool.domain_name_servers is string %}
@@ -267,6 +267,11 @@ failover peer "{{ pool.failover_peer }}";
 {% endif %}
 {% if pool.range_begin is defined and pool.range_end is defined %}
     range {{ pool.range_begin }} {{ pool.range_end }};
+{% endif %}
+{% if pool.ranges is defined %}
+{% for range in pool.ranges %}
+    range {{ range.begin }} {{ range.end }};
+{% endfor %}
 {% endif %}
 {% if pool.allow is defined %}
     allow {{ pool.allow }};
