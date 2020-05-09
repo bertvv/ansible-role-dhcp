@@ -1,8 +1,14 @@
 # Change log
 
-This file contains al notable changes to the dhcp Ansible role.
+This file contains all notable changes to the dhcp Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/).
+
+## 3.0.3 - 2020-05-06
+
+### Added
+
+- (GH-40) Added support for RHEL 8, and it's derivatives. (credit: [Stuart Knight](https://github.com/blofeldthefish))
 
 ## 3.0.2 - 2019-08-29
 
