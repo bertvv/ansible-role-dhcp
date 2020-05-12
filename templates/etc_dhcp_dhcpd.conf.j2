@@ -154,7 +154,7 @@ include "{{ dhcp_config_dir }}/{{ include | basename }}";
 # Custom Includes
 #
 {% for include in dhcp_custom_includes %}
-include "{{ dhcp_config_dir }}/{{ include | basename }}";
+include "{{ dhcp_config_dir }}/{{ ( include | basename ).split('.j2')[0] }}";
 {% endfor %}
 {% endif %}
 
