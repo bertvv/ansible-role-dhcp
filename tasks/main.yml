@@ -25,11 +25,8 @@
 
 - name: Install custom includes
   template:
-    src: "{{ item.0 }}"
-    dest: >-
-      {{ dhcp_config_dir + '/' + (item.0 | basename)
-      if (item.0 | basename | splitext | last) != '.j2' else
-      dhcp_config_dir + '/' + (item.0 | basename | splitext | first) }}
+    src: "{{ item }}"
+    dest: "{{ dhcp_config_dir }}/{{ ( item | basename ).split('.j2')[0] }}"
     owner: root
     group: root
     mode: "{{ item.1 | default('0644') }}"

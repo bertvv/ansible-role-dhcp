@@ -218,11 +218,11 @@ Setting the variable `dhcp_pxeboot_server`, will redirect PXE clients to the spe
 
 ### Custom Includes
 
-Setting the variable `dhcp_custom_inludes` to a jinja template will allow custom configurations to be used which will subsiquently be included into the `dhcpd.conf` file. If the template file name has the `.j2` extension it will be removed from the destination file name, else it will preserve the template file name in the destination.
+Setting the variable `dhcp_custom_inludes` to a jinja template will allow custom configurations to be used which will subsequently be included into the `dhcpd.conf` file. If the template file name has the `.j2` extension it will be removed from the destination file name, else it will preserve the template file name in the destination.
 
 ```Yaml
 dhcp_custom_includes:
-  - custom-dhcp-config.conf.j2
+  - custom-dhcp-config.conf[.j2]
 ```
 
 The default mode for the destination custom config file is 0644. To modify this set the variable `dhcp_custom_includes_modes`. The zip_longest filter will be used in conjunction with `dhcp_custom_includes` variable.
