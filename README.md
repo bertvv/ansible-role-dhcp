@@ -195,11 +195,12 @@ ranges:
 
 You can specify hosts that should get a fixed IP address based on their MAC by setting the `dhcp_hosts` option. This is a list of dicts with the following three keys, of which `name` and `mac` are mandatory:
 
-| Option | Comment                                   |
-| :---   | :---                                      |
-| `name` | The name of the host                      |
-| `mac`  | The MAC address of the host               |
-| `ip`   | The IP address to be assigned to the host |
+| Option     | Comment                                         |
+| :---       | :---                                            |
+| `name`     | The name of the host                            |
+| `mac`      | The MAC address of the host                     |
+| `ip`       | The IP address to be assigned to the host       |
+| `hostname` | Hostname to be assigned through DHCP (optional) |
 
 ```Yaml
 dhcp_hosts:

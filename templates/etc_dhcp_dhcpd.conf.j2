@@ -293,6 +293,9 @@ host {{ host.name | replace (" ","_") | replace ("'","_") | replace (":","_") }}
 {% if host.ip is defined %}
   fixed-address {{ host.ip }};
 {% endif %}
+{% if host.hostname is defined %}
+  option host-name "{{ host.hostname }}";
+{% endif %}
 }
 {% endfor %}
 {% endif %}
