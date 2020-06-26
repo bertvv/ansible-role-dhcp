@@ -15,6 +15,12 @@
     state: "{{ dhcp_packages_state }}"
   tags: dhcp
 
+- name: Install pip DHCPMonitor  module
+  pip:
+    name: isc_dhcp_leases
+  tags:
+    - package
+
 - include_tasks: apparmor-fix.yml
   when: ansible_os_family == 'Debian' and dhcp_apparmor_fix|bool
   tags: dhcp

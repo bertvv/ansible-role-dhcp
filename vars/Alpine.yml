@@ -3,6 +3,8 @@
 
 dhcp_packages:
   - dhcp
+  - python
+  - py-pip
 
 dhcp_config_dir: /etc/dhcp
 
