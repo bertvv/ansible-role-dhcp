@@ -236,6 +236,7 @@ option ntp-servers {{ subnet.ntp_servers|join(', ') }};
   host {{ host.name }} {
     hardware ethernet {{ host.mac }};
     fixed-address {{ host.ip }};
+    option host-name "{{ host.name }}";
   }
 {% endfor %}
 {% endif %}
@@ -293,6 +294,7 @@ host {{ host.name | replace (" ","_") | replace ("'","_") | replace (":","_") }}
 {% if host.ip is defined %}
   fixed-address {{ host.ip }};
 {% endif %}
+  option host-name "{{ host.name }}";
 }
 {% endfor %}
 {% endif %}
