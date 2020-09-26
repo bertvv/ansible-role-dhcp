@@ -299,6 +299,18 @@ host {{ host.name | replace (" ","_") | replace ("'","_") | replace (":","_") }}
 }
 {% endfor %}
 {% endif %}
+{% if dhcp_dns_zones is defined %}
+
+#
+# DNS zone declarations
+# 
+{% for zone in dhcp_dns_zones %}
+zone {{ zone.name }} {
+  primary {{ zone.primary }};
+  key {{ zone.key }};
+}
+{% endfor %}
+{% endif %}
 {% if dhcp_pxeboot_server is defined %}
 
 #
