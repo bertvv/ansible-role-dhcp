@@ -28,7 +28,6 @@
     src: "{{ item }}"
     dest: "{{ dhcp_config_dir }}/{{ ( item | basename ).split('.j2')[0] }}"
     owner: root
-    group: root
     mode: 0644
   with_items: "{{ dhcp_custom_includes }}"
   when: dhcp_custom_includes is defined
@@ -56,7 +55,6 @@
     src: etc_dhcp_dhcpd.conf.j2
     dest: "{{ dhcp_config }}"
     owner: root
-    group: root
     mode: 0644
     validate: 'dhcpd -t -cf %s'
   notify: restart dhcp
