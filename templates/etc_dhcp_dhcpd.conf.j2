@@ -14,6 +14,18 @@ key omapi_key {
     secret "{{ dhcp_global_omapi_secret }}";
 };
 {% endif %}
+{% if dhcp_global_ddns_updates is defined %}
+ddns-updates {{ dhcp_global_ddns_updates }};
+{% endif %}
+{% if dhcp_global_ddns_update_style is defined %}
+ddns-update-style {{ dhcp_global_ddns_update_style }};
+{% endif %}
+{% if dhcp_global_ignore is defined %}
+ignore {{ dhcp_global_ignore }};
+{% endif %}
+{% if dhcp_global_update_static_leases is defined %}
+update-static-leases {{ dhcp_global_update_static_leases }};
+{% endif %}
 {% if dhcp_global_authoritative is defined %}
 {{ dhcp_global_authoritative }};
 {% endif %}
