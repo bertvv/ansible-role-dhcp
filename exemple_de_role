@@ -1,0 +1,19 @@
+# Install DHCP server on interface eth0 with one simple subnet:
+---
+- hosts: all 
+  roles:
+  - role: dhcp_server
+    dhcp_interfaces: eth0
+    dhcp_common_domain: example.org
+    dhcp_common_nameservers: ns1.example.org, ns2.example.org
+    dhcp_common_default_lease_time: 600
+    dhcp_common_max_lease_time: 7200
+    dhcp_common_ddns_update_style: none
+    dhcp_common_authoritative: true
+    dhcp_common_log_facility: local7
+    dhcp_subnets:
+      - base: 192.168.10.0
+        netmask: 255.255.255.0
+        range_start: 192.168.10.150
+        range_end: 192.168.10.200
+        routers: 192.168.10.1
