@@ -161,6 +161,7 @@ An alphabetical list of supported options in a subnet declaration:
 | `routers`             | no       | IP address of the gateway for this subnet                             |
 | `server_name`         | no       | Server name sent to the client                                        |
 | `subnet_mask`         | no       | Overrides the `netmask` of the subnet declaration                     |
+| `options`             | no       | A dict of options to add to this subnet                               |
 
 You can specify address pools within a subnet by setting the `pools` options. This allows you to specify a pool of addresses that will be treated differently than another pool of addresses, even on the same network segment or subnet. It is a list of dicts with the following keys, all of which are optional:
 

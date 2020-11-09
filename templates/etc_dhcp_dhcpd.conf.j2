@@ -234,6 +234,11 @@ option ntp-servers {{ subnet.ntp_servers|join(', ') }};
 {% if subnet.booting is defined %}
 {{ subnet.booting }} booting;
 {% endif %}
+{% if subnet.options is defined %}
+{% for opt in subnet.options %}
+  option {{ opt }} {{ subnet.options[opt] }};
+{% endfor %}
+{% endif %}
 {% if subnet.hosts is defined %}
 {% for host in subnet.hosts %}
   host {{ host.name }} {
