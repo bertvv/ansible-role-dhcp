@@ -308,9 +308,17 @@ class "pxeclients" {
   next-server {{ dhcp_pxeboot_server }};
 
   if option arch = 00:07 {
+    {% if dhcp_global_filename_uefi is defined %}
+    filename "{{ dhcp_global_filename_uefi }}";
+    {% else %}
     filename "pxelinux/bootx64.efi";
+    {% endif %}
   } else {
+    {% if dhcp_global_filename is defined %}
+    filename "{{ dhcp_global_filename }}";
+    {% else %}
     filename "pxelinux/pxelinux.0";
+    {% endif %}
   }
 }
 
