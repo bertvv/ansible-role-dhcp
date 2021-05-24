@@ -148,6 +148,7 @@ An alphabetical list of supported options in a subnet declaration:
 | `domain_search`       | no       | List of domain names for resolution of non-FQDNs(1)                   |
 | `filename`            | no       | filename to retrieve from boot server                                 |
 | `hosts`               | no       | List of fixed IP address hosts for each subnet, similar to dhcp_hosts |
+| `interface`           | no       | Overrides the `interface` of the subnet declaration                   |
 | `ip`                  | yes      | **Required.** IP address of the subnet                                |
 | `max_lease_time`      | no       | Maximum lease time for this subnet (in seconds)                       |
 | `netmask`             | yes      | **Required.** Network mask of the subnet (in dotted decimal notation) |
