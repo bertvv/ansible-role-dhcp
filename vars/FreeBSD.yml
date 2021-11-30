@@ -1,0 +1,11 @@
+# roles/dhcp/vars/FreeBSD.yml
+---
+
+dhcp_packages:
+  - isc-dhcp44-server
+
+dhcp_config_dir: /usr/local/etc/
+
+dhcp_config: /usr/local/etc/dhcpd.conf
+
+dhcp_service: isc-dhcpd
