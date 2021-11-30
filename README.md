@@ -50,6 +50,7 @@ See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for 
 | `dhcp_global_server_state`        | Service state (started, stopped)                                       |
 | `dhcp_global_subnet_mask`         | Global subnet mask                                                     |
 | `dhcp_custom_includes`            | List of jinja config files to be included (from `dhcp_config_dir`)     |
+| `dhcp_custom_includes_modes`      | List of modes for the destination custom config file                   |
 
 **Remarks**
 
@@ -195,11 +196,12 @@ ranges:
 
 You can specify hosts that should get a fixed IP address based on their MAC by setting the `dhcp_hosts` option. This is a list of dicts with the following three keys, of which `name` and `mac` are mandatory:
 
-| Option | Comment                                   |
-| :---   | :---                                      |
-| `name` | The name of the host                      |
-| `mac`  | The MAC address of the host               |
-| `ip`   | The IP address to be assigned to the host |
+| Option     | Comment                                         |
+| :---       | :---                                            |
+| `name`     | The name of the host                            |
+| `mac`      | The MAC address of the host                     |
+| `ip`       | The IP address to be assigned to the host       |
+| `hostname` | Hostname to be assigned through DHCP (optional) |
 
 ```Yaml
 dhcp_hosts:
@@ -222,6 +224,13 @@ Setting the variable `dhcp_custom_inludes` to a jinja template will allow custom
 ```Yaml
 dhcp_custom_includes:
   - custom-dhcp-config.conf[.j2]
+```
+
+The default mode for the destination custom config file is 0644. To modify this set the variable `dhcp_custom_includes_modes`. The zip_longest filter will be used in conjunction with `dhcp_custom_includes` variable.
+
+```Yaml
+dhcp_custom_includes_modes:
+  - '0600'
 ```
 
 You can create your own variables to use within the template allowing for total flexibility. To avoid variable conflicts make sure that you use variables that are not referenced within this role as this will duplicate configuration in multiple `.conf` files.
