@@ -291,11 +291,40 @@ No dependencies.
 
 ## Example Playbook
 
-See the [test playbook](https://github.com/bertvv/ansible-role-dhcp/blob/vagrant-tests/test.yml)
+See the [test playbook](molecule/default/converge.yml)
 
 ## Testing
 
-Tests for this role are provided in the form of a Vagrant environment that is kept in a separate branch, `vagrant-tests`. For more information about setting up the test environment and running the tests, refer to the [README](https://github.com/bertvv/ansible-role-dhcp/blob/vagrant-tests/README.md) of the test branch.
+To run the tests for this playbook, you need to have Molecule, VirtualBox and Vagrant installed. Running the command `molecule converge` will create a VirtualBox VM with a host-only interface with IP address 192.168.222.2. To test, you can e.g. use the nmap dhcp-discover script:
+
+```console
+$ sudo nmap --script broadcast-dhcp-discover -e vboxnet7
+Starting Nmap 7.91 ( https://nmap.org ) at 2021-11-30 11:32 CET
+Pre-scan script results:
+| broadcast-dhcp-discover: 
+|   Response 1 of 2: 
+|     Interface: vboxnet7
+|     IP Offered: 192.168.222.50
+|     DHCP Message Type: DHCPOFFER
+|     Server Identifier: 192.168.222.2
+|     IP Address Lease Time: 5m00s
+|     Subnet Mask: 255.255.255.0
+|     Domain Name Server: 10.0.2.3, 10.0.2.4
+|     Domain Name: example.com
+|     Broadcast Address: 192.168.222.255
+|   Response 2 of 2: 
+|     Interface: vboxnet7
+|     IP Offered: 192.168.222.50
+|     DHCP Message Type: DHCPOFFER
+|     Server Identifier: 192.168.222.2
+|     IP Address Lease Time: 5m00s
+|     Subnet Mask: 255.255.255.0
+|     Domain Name Server: 10.0.2.3, 10.0.2.4
+|     Domain Name: example.com
+|_    Broadcast Address: 192.168.222.255
+WARNING: No targets were specified, so 0 hosts scanned.
+Nmap done: 0 IP addresses (0 hosts up) scanned in 10.19 seconds
+```
 
 ## License
 
@@ -314,13 +343,17 @@ Issues, feature requests, ideas are appreciated and can be posted in the Issues 
 - [Birgit Croux](https://github.com/birgitcroux/)
 - [@cacheira](https://github.com/cacheira)
 - [@donvipre](https://github.com/donvipre)
+- [Fabio Rocha](https://github.com/frock81)
 - Felix Egli
 - [Guillaume Parent](https://github.com/gparent)
+- [Jan Bundesmann](https://github.com/knoppi)
 - [Jonathan Piron](https://github.com/jpiron)
 - [Josh Benner](https://github.com/joshbenner)
+- [Josh Cummings](https://github.com/jrac)
 - [@jpiron](https://github.com/jpiron)
 - [@lijok](https://github.com/lijok)
 - [Maxim Baranov](https://github.com/mbaran0v)
 - [@RayfordJ](https://github.com/rayfordj)
 - [Rian Bogle](https://github.com/rbogle/)
 - [Stuart Knight](https://github.com/blofeldthefish) (maintainer)
+- [Valentin Delaye](https://github.com/jonesbusy)

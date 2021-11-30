@@ -4,11 +4,20 @@ This file contains all notable changes to the dhcp Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/).
 
-## 3.0.3 - 2020-05-06
+## 3.1.0 - 2021-11-30
 
 ### Added
 
-- (GH-40) Added support for RHEL 8, and it's derivatives. (credit: [Stuart Knight](https://github.com/blofeldthefish))
+- (GH-44) Add support for RHEL 8, and its derivatives. (credit: [Stuart Knight](https://github.com/blofeldthefish))
+- (GH-43) Allow to specify multiple ranges in a subnet declaration (credit: [Fabio Rocha](https://github.com/frock81))
+- (GH-49) Add option to distribute hostnames through DHCP (credit: [Jan Bundesmann](https://github.com/knoppi))
+- (GH-52) Add support for FreeBSD (credit: [Josh Cummings](https://github.com/jrac))
+- (GH-60) Allow setting the network interface for subnet declarations (credit: [Valentin Delaye](https://github.com/jonesbusy))
+
+### Changed
+
+- (GH-45) If a custom config file has .j2 as extension, remove it when installing on the target system (credit: [Fabio Rocha](https://github.com/frock81))
+- (GH-46) Allow setting permissions on custom config files (credit: [Fabio Rocha](https://github.com/frock81))
 
 ## 3.0.2 - 2019-08-29
 
