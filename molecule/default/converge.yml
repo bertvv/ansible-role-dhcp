@@ -1,0 +1,16 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+  vars:
+    dhcp_subnets:
+      - ip: 192.168.68.0
+        netmask: 255.255.255.0
+        domain_name_servers:
+          - 10.0.2.3
+        range_begin: 192.168.68.101
+        range_end: 192.168.68.254
+  tasks:
+    - name: "Include bertvv.dhcpd"
+      include_role:
+        name: "bertvv.dhcpd"
