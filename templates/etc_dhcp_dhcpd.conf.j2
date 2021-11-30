@@ -175,6 +175,9 @@ class "{{ class.name }}" {
 #
 {% for subnet in dhcp_subnets %}
 subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
+{% if subnet.interface is defined %}
+  interface {{ subnet.interface }};
+{% endif %}
 {% if subnet.default_lease_time is defined %}
   default-lease-time {{ subnet.default_lease_time }};
 {% endif %}
