@@ -25,12 +25,12 @@
 
 - name: Install custom includes
   template:
-    src: "{{ item }}"
-    dest: "{{ dhcp_config_dir }}/{{ ( item | basename ).split('.j2')[0] }}"
+    src: "{{ item.0 }}"
+    dest: "{{ dhcp_config_dir }}/{{ ( item.0 | basename ).split('.j2')[0] }}"
     owner: root
     group: root
-    mode: 0644
-  with_items: "{{ dhcp_custom_includes }}"
+    mode: "{{ item.1 | default('0644') }}"
+  loop: "{{ dhcp_custom_includes | zip_longest(dhcp_custom_includes_modes | default([])) | list }}"
   when: dhcp_custom_includes is defined
   notify: restart dhcp
   tags: dhcp
