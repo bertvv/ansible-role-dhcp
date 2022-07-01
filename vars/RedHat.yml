@@ -2,7 +2,7 @@
 ---
 
 dhcp_packages:
-  - "{{ ( ansible_distribution_major_version == '8' ) | ternary( 'dhcp-server', 'dhcp' ) }}"
+  - "{{ ( ansible_distribution_major_version is version('8', '>=') ) | ternary( 'dhcp-server', 'dhcp' ) }}"
 
 dhcp_config_dir: /etc/dhcp
 
