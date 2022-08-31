@@ -38,6 +38,9 @@ default-lease-time {{ dhcp_global_default_lease_time }};
 {% if dhcp_global_max_lease_time is defined %}
 max-lease-time {{ dhcp_global_max_lease_time }};
 {% endif %}
+{% if dhcp_global_server_name is defined %}
+server-name "{{ dhcp_global_server_name }}";
+{% endif %}
 {% if dhcp_global_subnet_mask is defined %}
 option subnet-mask {{ dhcp_global_subnet_mask }};
 {% endif %}
@@ -70,9 +73,6 @@ option domain-search "{{ dhcp_global_domain_search }}";
 {% else %}
 option domain-search "{{ dhcp_global_domain_search|join('", "') }}";
 {% endif %}
-{% endif %}
-{% if dhcp_global_server_name is defined %}
-option server-name "{{ dhcp_global_server_name }}";
 {% endif %}
 {% if dhcp_global_other_options is defined %}
 {% for option in dhcp_global_other_options %}
