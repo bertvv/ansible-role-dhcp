@@ -4,6 +4,17 @@ This file contains all notable changes to the dhcp Ansible role.
 
 This file adheres to the guidelines of [http://keepachangelog.com/](http://keepachangelog.com/). Versioning follows [Semantic Versioning](http://semver.org/).
 
+## 3.2.0 - 2022-10-21
+
+### Added
+
+- (#63) Add support for generic subnet options (credit: [James Eckersall](https://github.com/jameseck))s
+
+### Changed
+
+- (#70) Add support for EL 9 (credit: [@MartenBE](https://github.com/MartenBE))
+- (#69) Fix #62 - syntax error (credit: [Ian Martin](https://github.com/aztechian))
+
 ## 3.1.0 - 2021-11-30
 
 ### Added
