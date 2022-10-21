@@ -23,7 +23,7 @@ The following variables, when set, will be added to the global section of the DH
 See the [dhcp-options(5)](http://linux.die.net/man/5/dhcp-options) man page for more information about these options.
 
 | Variable                          | Comments                                                               |
-| :---                              | :---                                                                   |
+| :-------------------------------- | :--------------------------------------------------------------------- |
 | `dhcp_global_authoritative`       | Global authoritative statement (`authoritative`, `not authoritative`)  |
 | `dhcp_global_booting`             | Global booting (`allow`, `deny`, `ignore`)                             |
 | `dhcp_global_bootp`               | Global bootp (`allow`, `deny`, `ignore`)                               |
@@ -98,22 +98,22 @@ dhcp_global_failover:
 The variable `dhcp_global_failover_peer` contains a name for the configured peer, to be used on a per pool basis. The failover declaration options are specified with the variable `dhcp_global_failover`, a dictionary that may contain the following options:
 
 | Option                     | Required | Comment                                                               |
-| :---                       | :---:    | :--                                                                   |
-| `address`                  | no       | This server's IP address                                              |
-| `hba`                      | no       | colon-separated-hex-list                                              |
-| `load_balance_max_seconds` | no       | Cutoff after which load balance is disabled (3 to 5 recommended)      |
-| `max-balance`              | no       | Failover pool balance statement                                       |
-| `max-lease-misbalance`     | no       | Failover pool balance statement                                       |
-| `max-lease-ownership`      | no       | Failover pool balance statement                                       |
-| `max_response_delay`       | no       | Maximum seconds without contact before engaging failover              |
-| `max_unacked_updates`      | no       | Maximum BNDUPD it can send before receiving a BNDACK (10 recommended) |
-| `mclt`                     | no       | Maximum Client Lead Time                                              |
-| `min-balance`              | no       | Failover pool balance statement                                       |
-| `peer_address`             | no       | Failover peer's IP addres                                             |
-| `peer_port`                | no       | This server's port (generally 519/520 or 647/847)                     |
-| `port`                     | no       | This server's port (generally 519/520 or 647/847)                     |
-| `role`                     | no       | primary, secondary                                                    |
-| `split`                    | no       | Load balance split (0-255)                                            |
+| :------------------------- | :------: | :-------------------------------------------------------------------- |
+| `address`                  |    no    | This server's IP address                                              |
+| `hba`                      |    no    | colon-separated-hex-list                                              |
+| `load_balance_max_seconds` |    no    | Cutoff after which load balance is disabled (3 to 5 recommended)      |
+| `max-balance`              |    no    | Failover pool balance statement                                       |
+| `max-lease-misbalance`     |    no    | Failover pool balance statement                                       |
+| `max-lease-ownership`      |    no    | Failover pool balance statement                                       |
+| `max_response_delay`       |    no    | Maximum seconds without contact before engaging failover              |
+| `max_unacked_updates`      |    no    | Maximum BNDUPD it can send before receiving a BNDACK (10 recommended) |
+| `mclt`                     |    no    | Maximum Client Lead Time                                              |
+| `min-balance`              |    no    | Failover pool balance statement                                       |
+| `peer_address`             |    no    | Failover peer's IP addres                                             |
+| `peer_port`                |    no    | This server's port (generally 519/520 or 647/847)                     |
+| `port`                     |    no    | This server's port (generally 519/520 or 647/847)                     |
+| `role`                     |    no    | primary, secondary                                                    |
+| `split`                    |    no    | Load balance split (0-255)                                            |
 
 The failover peer directive has to be in the definition of address pools (see below).
 
@@ -141,36 +141,37 @@ dhcp_subnets:
 An alphabetical list of supported options in a subnet declaration:
 
 | Option                | Required | Comment                                                               |
-| :---                  | :---:    | :--                                                                   |
-| `booting`             | no       | allow,deny,ignore                                                     |
-| `bootp`               | no       | allow,deny,ignore                                                     |
-| `default_lease_time`  | no       | Default lease time for this subnet (in seconds)                       |
-| `domain_name_servers` | no       | List of domain name servers for this subnet(1)                        |
-| `domain_search`       | no       | List of domain names for resolution of non-FQDNs(1)                   |
-| `filename`            | no       | filename to retrieve from boot server                                 |
-| `hosts`               | no       | List of fixed IP address hosts for each subnet, similar to dhcp_hosts |
-| `interface`           | no       | Overrides the `interface` of the subnet declaration                   |
-| `ip`                  | yes      | **Required.** IP address of the subnet                                |
-| `max_lease_time`      | no       | Maximum lease time for this subnet (in seconds)                       |
-| `netmask`             | yes      | **Required.** Network mask of the subnet (in dotted decimal notation) |
-| `next_server`         | no       | IP address of the boot server                                         |
-| `ntp_servers`         | no       | List of NTP servers for this subnet                                   |
-| `range_begin`         | no       | Lowest address in the range of dynamic IP addresses to be assigned    |
-| `range_end`           | no       | Highest address in the range of dynamic IP addresses to be assigned   |
-| `ranges`              | no       | If multiple ranges are needed, they can be specified as a list (2)    |
-| `routers`             | no       | IP address of the gateway for this subnet                             |
-| `server_name`         | no       | Server name sent to the client                                        |
-| `subnet_mask`         | no       | Overrides the `netmask` of the subnet declaration                     |
-| `options`             | no       | A dict of options to add to this subnet                               |
+| :-------------------- | :------: | :-------------------------------------------------------------------- |
+| `booting`             |    no    | allow,deny,ignore                                                     |
+| `bootp`               |    no    | allow,deny,ignore                                                     |
+| `default_lease_time`  |    no    | Default lease time for this subnet (in seconds)                       |
+| `domain_name_servers` |    no    | List of domain name servers for this subnet(1)                        |
+| `domain_search`       |    no    | List of domain names for resolution of non-FQDNs(1)                   |
+| `filename`            |    no    | filename to retrieve from boot server                                 |
+| `hosts`               |    no    | List of fixed IP address hosts for each subnet, similar to dhcp_hosts |
+| `interface`           |    no    | Overrides the `interface` of the subnet declaration                   |
+| `ip`                  |   yes    | **Required.** IP address of the subnet                                |
+| `max_lease_time`      |    no    | Maximum lease time for this subnet (in seconds)                       |
+| `netmask`             |   yes    | **Required.** Network mask of the subnet (in dotted decimal notation) |
+| `next_server`         |    no    | IP address of the boot server                                         |
+| `ntp_servers`         |    no    | List of NTP servers for this subnet                                   |
+| `range_begin`         |    no    | Lowest address in the range of dynamic IP addresses to be assigned    |
+| `range_end`           |    no    | Highest address in the range of dynamic IP addresses to be assigned   |
+| `ranges`              |    no    | If multiple ranges are needed, they can be specified as a list (2)    |
+| `routers`             |    no    | IP address of the gateway for this subnet                             |
+| `server_name`         |    no    | Server name sent to the client                                        |
+| `subnet_mask`         |    no    | Overrides the `netmask` of the subnet declaration                     |
+| `options`             |    no    | A dict of options to add to this subnet                               |
 
 You can specify address pools within a subnet by setting the `pools` options. This allows you to specify a pool of addresses that will be treated differently than another pool of addresses, even on the same network segment or subnet. It is a list of dicts with the following keys, all of which are optional:
 
 | Option                | Comment                                                            |
-| :---                  | :---                                                               |
+| :-------------------- | :----------------------------------------------------------------- |
 | `allow`               | Specifies which hosts are allowed in this pool(1)                  |
 | `default_lease_time`  | The default lease time for this pool                               |
 | `deny`                | Specifies which hosts are not allowed in this pool                 |
 | `domain_name_servers` | The domain name servers to be used for this pool(1)                |
+| `failover_peer`       | Specifies a failover server                                        |
 | `max_lease_time`      | The maximum lease time for this pool                               |
 | `min_lease_time`      | The minimum lease time for this pool                               |
 | `range_begin`         | The lowest address in this pool                                    |
@@ -199,7 +200,7 @@ ranges:
 You can specify hosts that should get a fixed IP address based on their MAC by setting the `dhcp_hosts` option. This is a list of dicts with the following three keys, of which `name` and `mac` are mandatory:
 
 | Option     | Comment                                         |
-| :---       | :---                                            |
+| :--------- | :---------------------------------------------- |
 | `name`     | The name of the host                            |
 | `mac`      | The MAC address of the host                     |
 | `ip`       | The IP address to be assigned to the host       |
