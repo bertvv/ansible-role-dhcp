@@ -15,11 +15,13 @@
     state: "{{ dhcp_packages_state }}"
   tags: dhcp
 
-- include_tasks: apparmor-fix.yml
+- name: Run AppArmor fix when appropriate
+  include_tasks: apparmor-fix.yml
   when: ansible_os_family == 'Debian' and dhcp_apparmor_fix|bool
   tags: dhcp
 
-- include_tasks: default-fix.yml
+- name: Set default listening interface on Debian and derivatives
+  include_tasks: default-fix.yml
   when: ansible_os_family == 'Debian'
   tags: dhcp
 
@@ -28,26 +30,30 @@
     src: "{{ item.0 }}"
     dest: "{{ dhcp_config_dir }}/{{ ( item.0 | basename ).split('.j2')[0] }}"
     owner: root
+    group: root
     mode: "{{ item.1 | default('0644') }}"
   loop: "{{ dhcp_custom_includes | zip_longest(dhcp_custom_includes_modes | default([])) | list }}"
   when: dhcp_custom_includes is defined
-  notify: restart dhcp
+  notify: Restart DHCP
   tags: dhcp
 
 - name: Install includes
   copy:
     src: "{{ item }}"
     dest: "{{ dhcp_config_dir }}/{{ item | basename }}"
+    owner: root
+    group: root
+    mode: '0644'
   with_items: "{{ dhcp_global_includes }}"
   when: dhcp_global_includes is defined
-  ignore_errors: "{{ dhcp_global_includes_missing }}"
+  notify: Restart DHCP
   tags: dhcp
 
 - name: Set config directory perms
   file:
     path: "{{ dhcp_config | dirname }}"
     state: directory
-    mode: 0755
+    mode: '0755'
   tags: dhcp
 
 - name: Install config file
@@ -55,9 +61,9 @@
     src: etc_dhcp_dhcpd.conf.j2
     dest: "{{ dhcp_config }}"
     owner: root
-    mode: 0644
+    mode: '0644'
     validate: 'dhcpd -t -cf %s'
-  notify: restart dhcp
+  notify: Restart DHCP
   tags: dhcp
 
 - name: "Ensure service is {{ dhcp_global_server_state | default('started') }}"
