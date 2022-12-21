@@ -301,10 +301,10 @@ host {{ host.name | replace (" ","_") | replace ("'","_") | replace (":","_") }}
 {% endif %}
 {# Debian "d-i" declaration to boot install #}
 {%- for subnet in dhcp_subnets %}
-{% set network = (subnet.ip + '/' + subnet.netmask)  | ipaddr('network/prefix') %}
+{% set network = (subnet.ip + '/' + subnet.netmask)  | ansible.netcommon.ipaddr('network/prefix') %}
 {% if subnet.next_server is defined 
 and host.ip is defined 
-and host.ip  | ipaddr(network) | ipaddr('bool') %}
+and host.ip  | ansible.netcommon.ipaddr(network) | ansible.netcommon.ipaddr('bool') %}
   if substring (option vendor-class-identifier, 0, 3) = "d-i" {
     filename "tftp://{{ subnet.next_server }}/pxelinux.cfg/01-{{ host.mac |replace(':', '-') | lower }}.cfg";
   }
