@@ -9,3 +9,5 @@ dhcp_config_dir: /etc/dhcp
 dhcp_config: /etc/dhcp/dhcpd.conf
 
 dhcp_service: dhcpd
+
+dhcp_validate_cmd: "dhcpd -t -cf"
