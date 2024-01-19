@@ -19,6 +19,10 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - bionic
+    - name: Debian
+      versions:
+        - buster
+        - bullseye
   galaxy_tags:
     - system
     - networking
