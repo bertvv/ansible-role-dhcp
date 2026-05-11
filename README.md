@@ -1,5 +1,10 @@
 # Ansible role `dhcp`
 
+> **Notice.**
+>
+> Unfortunately, I haven't had time to maintain this role for a few years now. Therefore, I think that the only honest decision is to archive this repository. In addition, ISC DHCP itself is considered EOL, so we all should probably move to alternatives...
+> My sincere thanks to all contributers. The code will remain public, so feel free to fork and maintain your own version. 
+
 Ansible role for setting up ISC DHCPD. The responsibilities of this role are to install packages and manage the configuration ([dhcpd.conf(5)](http://linux.die.net/man/5/dhcpd.conf)). Managing the firewall configuration is NOT a concern of this role. You can do this in your local playbook, or use another role (e.g. [bertvv.rh-base](https://galaxy.ansible.com/bertvv/rh-base).
 
 Refer to the [change log](CHANGELOG.md) for notable changes in each release.
