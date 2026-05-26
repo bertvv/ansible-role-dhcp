@@ -2,7 +2,7 @@
 ---
 
 - name: Load distro-specific variables
-  include_vars: "{{ item }}"
+  ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_os_family }}.yml"
@@ -10,23 +10,23 @@
   tags: dhcp
 
 - name: Install packages
-  package:
+  ansible.builtin.package:
     name: "{{ dhcp_packages }}"
     state: "{{ dhcp_packages_state }}"
   tags: dhcp
 
 - name: Run AppArmor fix when appropriate
-  include_tasks: apparmor-fix.yml
+  ansible.builtin.include_tasks: apparmor-fix.yml
   when: ansible_os_family == 'Debian' and dhcp_apparmor_fix|bool
   tags: dhcp
 
 - name: Set default listening interface on Debian and derivatives
-  include_tasks: default-fix.yml
+  ansible.builtin.include_tasks: default-fix.yml
   when: ansible_os_family == 'Debian'
   tags: dhcp
 
 - name: Install custom includes
-  template:
+  ansible.builtin.template:
     src: "{{ item.0 }}"
     dest: "{{ dhcp_config_dir }}/{{ ( item.0 | basename ).split('.j2')[0] }}"
     owner: root
@@ -38,7 +38,7 @@
   tags: dhcp
 
 - name: Install includes
-  copy:
+  ansible.builtin.copy:
     src: "{{ item }}"
     dest: "{{ dhcp_config_dir }}/{{ item | basename }}"
     owner: root
@@ -50,14 +50,14 @@
   tags: dhcp
 
 - name: Set config directory perms
-  file:
+  ansible.builtin.file:
     path: "{{ dhcp_config | dirname }}"
     state: directory
     mode: '0755'
   tags: dhcp
 
 - name: Install config file
-  template:
+  ansible.builtin.template:
     src: etc_dhcp_dhcpd.conf.j2
     dest: "{{ dhcp_config }}"
     owner: root
@@ -67,7 +67,7 @@
   tags: dhcp
 
 - name: "Ensure service is {{ dhcp_global_server_state | default('started') }}"
-  service:
+  ansible.builtin.service:
     name: "{{ dhcp_service }}"
     state: "{{ dhcp_global_server_state | default('started') }}"
     enabled: true
