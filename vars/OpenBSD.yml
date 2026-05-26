@@ -1,0 +1,13 @@
+# roles/dhcp/vars/OpenBSD.yml
+---
+
+dhcp_packages:
+  - dhcpd
+
+dhcp_config_dir: /etc/
+
+dhcp_config: /etc/dhcpd.conf
+
+dhcp_service: dhcpd
+
+dhcp_validate_cmd: "dhcpd -n -c"

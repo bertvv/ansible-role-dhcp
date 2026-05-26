@@ -9,3 +9,5 @@ dhcp_config_dir: /usr/local/etc/
 dhcp_config: /usr/local/etc/dhcpd.conf
 
 dhcp_service: isc-dhcpd
+
+dhcp_validate_cmd: "dhcpd -t -cf"

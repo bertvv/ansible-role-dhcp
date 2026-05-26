@@ -13,6 +13,8 @@
   package:
     name: "{{ dhcp_packages }}"
     state: "{{ dhcp_packages_state }}"
+  # System component on OpenBSD
+  when: ansible_os_family != 'OpenBSD'
   tags: dhcp
 
 - name: Run AppArmor fix when appropriate
@@ -62,7 +64,7 @@
     dest: "{{ dhcp_config }}"
     owner: root
     mode: '0644'
-    validate: 'dhcpd -t -cf %s'
+    validate: '{{ dhcp_validate_cmd }} %s'
   notify: Restart DHCP
   tags: dhcp
 
