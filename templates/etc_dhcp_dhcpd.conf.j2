@@ -14,6 +14,18 @@ key omapi_key {
     secret "{{ dhcp_global_omapi_secret }}";
 };
 {% endif %}
+{% if dhcp_global_ddns_updates is defined %}
+ddns-updates {{ dhcp_global_ddns_updates }};
+{% endif %}
+{% if dhcp_global_ddns_update_style is defined %}
+ddns-update-style {{ dhcp_global_ddns_update_style }};
+{% endif %}
+{% if dhcp_global_ignore is defined %}
+ignore {{ dhcp_global_ignore }};
+{% endif %}
+{% if dhcp_global_update_static_leases is defined %}
+update-static-leases {{ dhcp_global_update_static_leases }};
+{% endif %}
 {% if dhcp_global_authoritative is defined %}
 {{ dhcp_global_authoritative }};
 {% endif %}
@@ -234,6 +246,12 @@ subnet {{ subnet.ip }} netmask {{ subnet.netmask }} {
 {% if subnet.booting is defined %}
 {{ subnet.booting }} booting;
 {% endif %}
+{% if subnet.ddns_domainname is defined %}
+  ddns-domainname "{{ subnet.ddns_domainname }}";
+{% endif %}
+{% if subnet.ddns_rev_domainname is defined %}
+  ddns-rev-domainname "{{ subnet.ddns_rev_domainname }}";
+{% endif %}
 {% if subnet.options is defined %}
 {% for opt in subnet.options %}
   option {{ opt }} {{ subnet.options[opt] }};
@@ -304,7 +322,24 @@ host {{ host.name | replace (" ","_") | replace ("'","_") | replace (":","_") }}
 {% if host.hostname is defined %}
   option host-name "{{ host.hostname }}";
 {% endif %}
+{% if host.ddns_hostname is defined %}
+  ddns-hostname "{{ host.ddns_hostname }}";
+{% endif %}
+
 }
+{% endfor %}
+{% endif %}
+{% if dhcp_dns_zones is defined %}
+
+#
+# DNS zone declarations
+#
+{% for zone in dhcp_dns_zones %}
+zone {{ zone.name }} {
+  primary {{ zone.primary }};
+  key {{ zone.key }};
+}
+
 {% endfor %}
 {% endif %}
 {% if dhcp_pxeboot_server is defined %}
